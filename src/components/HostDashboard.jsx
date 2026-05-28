@@ -1,11 +1,9 @@
-// src/components/HostDashboard.jsx
 import React, { useState } from 'react';
-import { PlusCircle, BarChart3, List, ClipboardList, Check, X, ShieldCheck, DollarSign, Percent } from 'lucide-react';
+import { PlusCircle, BarChart3, ClipboardList, Check, X, ShieldCheck, DollarSign, Percent } from 'lucide-react';
 
 export default function HostDashboard({ listings, onAddListing, onDeleteListing }) {
   const [activeSubTab, setActiveSubTab] = useState('overview');
 
-  // Form states for adding new listing
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
   const [category, setCategory] = useState('Cabin');
@@ -17,10 +15,8 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
   const [bathrooms, setBathrooms] = useState(2);
   const [selectedImg, setSelectedImg] = useState('/images/cabin.png'); // Default preset
 
-  // Toast State
   const [toast, setToast] = useState('');
 
-  // Simulated Host Bookings
   const [hostBookings, setHostBookings] = useState([
     { id: "hb_1", guestName: "Michael Chang", listingTitle: "The Obsidian A-Frame Cabin", checkIn: "2026-06-10", checkOut: "2026-06-15", amount: 1400, status: "pending" },
     { id: "hb_2", guestName: "Sarah Jenkins", listingTitle: "Ubud Bamboo Forest Dome", checkIn: "2026-07-02", checkOut: "2026-07-05", amount: 660, status: "approved" }
@@ -53,7 +49,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
       category,
       images: [
         selectedImg,
-        "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=800&q=80"
+        "/images/cabin/cabin_1.jpg"
       ],
       description,
       amenities: amenitiesText.split(',').map(s => s.trim()).filter(Boolean),
@@ -74,8 +70,6 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
     onAddListing(newListing);
     setToast('Listing published successfully!');
     setTimeout(() => setToast(''), 3000);
-
-    // Reset Form
     setTitle('');
     setLocation('');
     setDescription('');
@@ -89,7 +83,6 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
       paddingTop: '2.5rem',
       paddingBottom: '5rem'
     }}>
-      {/* Toast Notification */}
       {toast && (
         <div style={{
           position: 'fixed',
@@ -107,8 +100,6 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
           {toast}
         </div>
       )}
-
-      {/* Title Header */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -123,7 +114,6 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
             Manage listings, track reservation requests, and monitor your boutique portfolio earnings.
           </p>
         </div>
-
         <button
           id="host-tab-create-btn"
           onClick={() => setActiveSubTab('create')}
@@ -134,8 +124,6 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
           Create New Listing
         </button>
       </div>
-
-      {/* Sub Tabs Navigation */}
       <div className="glass-panel" style={{
         display: 'flex',
         borderRadius: '12px',
@@ -196,11 +184,8 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
           Publish Stay
         </button>
       </div>
-
-      {/* TAB 1: OVERVIEW & STATS */}
       {activeSubTab === 'overview' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-
           {/* Stats Cards Row */}
           <div style={{
             display: 'grid',

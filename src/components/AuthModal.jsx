@@ -78,7 +78,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
         <div className="auth-img-side" style={{
           flex: '1',
           position: 'relative',
-          background: `url('https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=800&q=80') center center / cover no-repeat`,
+          background: `url('/images/cabin/cabin_1.jpg') center center / cover no-repeat`,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
