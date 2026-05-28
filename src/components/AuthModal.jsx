@@ -56,7 +56,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      zIndex: 1000,
+      zIndex: 1200,
       padding: '1rem'
     }} className="anim-fade auth-modal-overlay">
       
@@ -222,7 +222,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             </div>
           ) : (
             /* Form */
-            <form onSubmit={handleSubmit} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, justifyContent: 'center' }}>
+            <form onSubmit={handleSubmit} className="auth-form" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, justifyContent: 'center' }}>
               {error && (
                 <div style={{
                   background: 'rgba(224, 122, 95, 0.1)',
@@ -339,28 +339,32 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
         }
         @media (max-width: 650px) {
           .auth-modal-overlay {
-            padding: 0 !important;
+            padding: 1rem !important;
           }
           .auth-img-side {
             display: none !important;
           }
           .auth-modal-card {
-            max-width: 100% !important;
+            max-width: 450px !important;
             width: 100% !important;
-            height: 100vh !important;
+            height: 80vh !important;
             max-height: 100vh !important;
-            border-radius: 0px !important;
-            border: none !important;
+            border-radius: 24px !important;
             flex-direction: column !important;
           }
           .auth-form-side {
             padding: 2.5rem 1.5rem !important;
             width: 100% !important;
-            height: 100% !important;
+            height: auto !important;
             flex: 1 !important;
           }
           .mobile-badge {
             display: inline-block !important;
+          }
+          .auth-form {
+            flex-grow: 0 !important;
+            justify-content: flex-start !important;
+            margin-top: 2rem !important;
           }
         }
       `}} />

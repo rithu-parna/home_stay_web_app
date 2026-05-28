@@ -17,7 +17,7 @@ export default function BookingSuccessModal({ reservation, listing, onClose }) {
       bottom: 0,
       background: 'rgba(11, 11, 14, 0.85)',
       backdropFilter: 'blur(12px)',
-      zIndex: 200,
+      zIndex: 1200,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
