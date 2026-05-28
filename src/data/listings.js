@@ -15,7 +15,7 @@ const rawListingsData = [
       "/images/cabin/cabin_1.jpg",
       "/images/cabin/cabin_2.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "Nestled deep in the pine forests of Chamonix, The Obsidian is an architectural marvel. This A-frame cabin combines dark minimalist exterior lines with an incredibly warm, light-wood interior. Enjoy floor-to-ceiling glass windows offering panoramic views of Mont Blanc, a wood-fired outdoor hot tub, and a private stone fireplace that warms the entire open loft layout. It's the ultimate alpine retreat for design lovers and winter adventurers.",
     amenities: ["Wood-fired Hot Tub", "Indoor Fireplace", "Mont Blanc Views", "High-speed WiFi", "Ski-in / Ski-out", "Espresso Bar", "Outdoor Deck", "Floor Heating"],
     maxGuests: 4,
@@ -50,7 +50,7 @@ const rawListingsData = [
       "/images/villa/villa_1.jpg",
       "/images/villa/villa_2.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
+    video: "/videos/glide-over-coastal-beach.mp4",
     description: "Perched majestically on the volcanic cliffs of Oia, Aegean Horizon Villa redefined luxury cave-living. Carved partially into the rockface, the villa offers a seamless indoor-outdoor layout, leading directly to a private heated infinity pool that blends into the endless blue of the Aegean. The interior features curved white concrete walls, raw wood highlights, and minimalist custom Mediterranean furnishings.",
     amenities: ["Infinity Pool", "Sunset Caldera Views", "Heated Jacuzzi", "Private Chef Kitchen", "Complimentary Yacht Tour Access", "Wine Cellar", "Airport Transfer", "Daily Housekeeping"],
     maxGuests: 6,
@@ -84,7 +84,7 @@ const rawListingsData = [
       "/images/loft/loft_1.jpg",
       "/images/loft/loft_2.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
+    video: "/videos/kitchen.mp4",
     description: "A breathtaking conversion of a 19th-century metal foundry. This massive 2,200 sq ft loft boasts 18-foot exposed timber ceilings, restored red brick walls, and giant arched windows overlooking the East River and Manhattan skyline. Furnished with rare mid-century modern collector items, a vinyl record player with an extensive collection, and a jungle of hanging tropical plants, this space is an urban sanctuary.",
     amenities: ["Manhattan Skyline View", "Vinyl Record Station", "Custom Chef's Island", "Dedicated Workspace", "Smart Projector Room", "Hanging Garden Lounge", "Washer/Dryer", "Keyless Smart Entry"],
     maxGuests: 2,
@@ -118,7 +118,7 @@ const rawListingsData = [
       "/images/dome/dome_1.jpg",
       "/images/dome/dome_2.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "Suspended above a rushing river valley in the tropical heart of Ubud, the Bamboo Forest Dome is a masterpiece of sustainable organic architecture. Fully constructed out of black and blond local bamboo, this eco-dome has no glass windows, allowing the cool jungle breeze and the soothing sounds of the river to fill the room. It features a private swimming pool, netting hammock overlooking the canopy, and an outdoor rain shower.",
     amenities: ["Private Jungle Pool", "Valley Hanging Hammock", "Outdoor Rain Shower", "Daily Organic Breakfast", "Private Yoga Instructor", "Natural Air Conditioning", "Eco-friendly Toiletries", "Airport Pickup"],
     maxGuests: 2,
@@ -152,7 +152,7 @@ const rawListingsData = [
       "/images/heritage.png",
       "/images/heritage/heritage_3.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/house_tour.mp4",
+    video: "/videos/house_tour.mp4",
     description: "An authentic 16th-century Tuscan farmhouse painstakingly restored by local artisans. Situated amidst rolling hills, vineyards, and olive groves, the estate features hand-carved stone walls, exposed chestnut ceiling beams, and terracotta floors. The property offers an outdoor pizza oven, a solar-heated stone pool, and a private wine cellar stocked with local Chianti Classico.",
     amenities: ["Solar-heated Stone Pool", "Pizza Oven & BBQ", "Wine Cellar", "Olive Grove Gardens", "Cooking Masterclasses", "Fireplace", "Al Fresco Dining", "Bikes Provided"],
     maxGuests: 8,
@@ -186,7 +186,7 @@ const rawListingsData = [
       "/images/cabin/cabin_4.jpg",
       "/images/cabin/cabin_5.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/bathroom.mp4",
+    video: "/videos/bathroom.mp4",
     description: "Positioned directly under the auroral oval, this cutting-edge cabin features a custom double-glazed glass roof that stretches over the master bedroom. Sleep under the northern lights or watch the midnight sun from the comfort of a luxury king bed. The cabin is heated using state-of-the-art geothermal pumps and boasts an Scandinavian redwood sauna overlooking the Norwegian fjords.",
     amenities: ["Glass Roof Bedroom", "Redwood Fjord Sauna", "Northern Lights Views", "Geothermal Heating", "Outdoor Firepit", "Snowshoe Gear Provided", "High-speed WiFi", "Heated Bathroom Floors"],
     maxGuests: 2,
@@ -220,7 +220,7 @@ const rawListingsData = [
       "/images/villa/villa_2.jpg",
       "/images/villa/villa_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
+    video: "/videos/glide-over-coastal-beach.mp4",
     description: "A gorgeous sanctuary in Bali. Built entirely of concrete, glass, and teak wood, Mirage Villa features an open living plan looking directly onto a private lap pool flanked by tropical palms. The master bedroom is encased in floor-to-ceiling glass.",
     amenities: ["Private Lap Pool", "Tropical Gardens", "Daily Housekeeping", "In-villa Breakfast", "High-speed WiFi"],
     maxGuests: 4,
@@ -252,7 +252,7 @@ const rawListingsData = [
       "/images/loft/loft_2.jpg",
       "/images/loft/loft_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
+    video: "/videos/kitchen.mp4",
     description: "Located in the heart of SoHo, this converted artist loft features classic cast-iron columns, massive factory windows, and a curated gallery of local contemporary art.",
     amenities: ["City Views", "Dedicated Workspace", "Art Gallery", "Espresso Machine", "Smart TV"],
     maxGuests: 2,
@@ -285,7 +285,7 @@ const rawListingsData = [
       "/images/dome/dome_2.jpg",
       "/images/dome/dome_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "An eco-friendly geodesic dome in the wilderness of Patagonia. Wake up to views of the snow-capped mountain peaks through the transparent dome panel.",
     amenities: ["Mountain Peak Views", "Wood Stove", "Outdoor Hot Tub", "Guided Hikes Included", "Eco-friendly Heating"],
     maxGuests: 2,
@@ -317,7 +317,7 @@ const rawListingsData = [
       "/images/heritage/heritage_1.jpg",
       "/images/heritage/heritage_3.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/house_tour.mp4",
+    video: "/videos/house_tour.mp4",
     description: "A beautifully restored 120-year-old traditional townhouse (Machiya) located in the historic Gion district of Kyoto. Features tatami mat flooring, paper shoji screens, and a tranquil inner zen garden.",
     amenities: ["Private Zen Garden", "Traditional Tea Room", "Wooden Soak Tub", "Yukata Provided", "Kyoto Station Pickup"],
     maxGuests: 4,
@@ -349,7 +349,7 @@ const rawListingsData = [
       "/images/cabin/cabin_2.jpg",
       "/images/cabin/cabin_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "Tucked away in the redwood forest bordering Lake Tahoe, this A-Frame cabin has been fully updated with designer mid-century modern furnishings, a custom fire pit, and direct private beach access.",
     amenities: ["Lake Tahoe Access", "Outdoor Fire Pit", "Redwood Forest Views", "BBQ Grill", "Kayaks Included"],
     maxGuests: 4,
@@ -383,7 +383,7 @@ const rawListingsData = [
       "/images/dome/dome_1.jpg",
       "/images/dome/dome_2.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "Located in the driest desert in the world, this dome features a fully transparent ceiling dome for stargazing at the Milky Way. Comes with a high-end telescope.",
     amenities: ["Milky Way Stargazing", "Professional Telescope", "Desert Sunsets", "Outdoor Hammock", "Solar Powered"],
     maxGuests: 2,
@@ -415,7 +415,7 @@ const rawListingsData = [
       "/images/cabin.png",
       "/images/cabin/cabin_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "A cozy modern A-Frame cabin tucked in the towering pines of the Cascade Range. Features a private wood fire hot tub and skylights above the loft.",
     amenities: ["Skylights", "Wood Hot Tub", "Indoor Stove", "WiFi", "Fire Pit"],
     maxGuests: 4,
@@ -447,7 +447,7 @@ const rawListingsData = [
       "/images/villa.png",
       "/images/villa/villa_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
+    video: "/videos/glide-over-coastal-beach.mp4",
     description: "An exceptional luxury villa perched high above the cliffs of Positano. Features a private sun deck, heated plunge pool, and sweeping Mediterranean views.",
     amenities: ["Plunge Pool", "Sun Deck", "Sea Views", "Chef Kitchen", "Airport Pickup"],
     maxGuests: 6,
@@ -479,7 +479,7 @@ const rawListingsData = [
       "/images/loft.png",
       "/images/loft/loft_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
+    video: "/videos/kitchen.mp4",
     description: "A spacious industrial loft located in Berlin's creative district. Filled with custom neon installations, vintage synthesizers, and modern artwork.",
     amenities: ["Vintage Synthesizers", "Neon Art", "Projector Screen", "High-speed WiFi", "Bikes Included"],
     maxGuests: 2,
@@ -511,7 +511,7 @@ const rawListingsData = [
       "/images/dome.png",
       "/images/dome/dome_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "An eco-friendly dome utilizing natural geothermal heating. Located in a scenic lava field offering perfect Northern Lights stargazing views.",
     amenities: ["Geothermal Heating", "Northern Lights Views", "Outdoor Hot Tub", "Eco-Design", "Organic Breakfast"],
     maxGuests: 2,
@@ -543,7 +543,7 @@ const rawListingsData = [
       "/images/heritage/heritage_1.jpg",
       "/images/heritage.png"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/house_tour.mp4",
+    video: "/videos/house_tour.mp4",
     description: "A traditional Andalusian country home lovingly restored with terracotta tiling, whitewashed stone walls, and an arched central courtyard.",
     amenities: ["Central Courtyard", "Private Pool", "Orange Orchard", "Outdoor Kitchen", "Wine Cabinet"],
     maxGuests: 6,
@@ -575,7 +575,7 @@ const rawListingsData = [
       "/images/cabin.png",
       "/images/cabin/cabin_2.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
+    video: "/videos/livingspace.mp4",
     description: "A premium alpine cabin in Zermatt offering direct views of the iconic Matterhorn peak. Includes a Scandinavian redwood sauna.",
     amenities: ["Matterhorn Views", "Redwood Sauna", "Ski-in / Ski-out", "Geothermal Heating", "Complimentary Glühwein"],
     maxGuests: 4,
@@ -607,7 +607,7 @@ const rawListingsData = [
       "/images/villa.png",
       "/images/villa/villa_2.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
+    video: "/videos/glide-over-coastal-beach.mp4",
     description: "A pristine whitewashed cave villa with a heated outdoor plunge pool overlooking the volcanic caldera of Santorini.",
     amenities: ["Heated Plunge Pool", "Caldera Views", "Traditional Architecture", "Housekeeping", "Champagne Welcome"],
     maxGuests: 2,
@@ -639,7 +639,7 @@ const rawListingsData = [
       "/images/loft.png",
       "/images/loft/loft_1.jpg"
     ],
-    video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
+    video: "/videos/kitchen.mp4",
     description: "A beautifully restored Victorian-era warehouse loft in East London, featuring exposed brick walls, steel frame windows, and vintage industrial antiques.",
     amenities: ["Exposed Brick", "Vintage Industrial Antiques", "Record Player", "Workspace", "Nespresso Station"],
     maxGuests: 2,
