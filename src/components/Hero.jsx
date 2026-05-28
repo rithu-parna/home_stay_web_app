@@ -11,53 +11,141 @@ const categories = [
   { id: 'Heritage', label: 'Heritage', icon: Landmark }
 ];
 
+const uniqueVideos = [
+  { id: 'house_tour', url: 'https://res.cloudinary.com/demo/video/upload/house_tour.mp4' },
+  { id: 'livingspace', url: 'https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4' },
+  { id: 'bathroom', url: 'https://res.cloudinary.com/demo/video/upload/docs/bathroom.mp4' },
+  { id: 'kitchen', url: 'https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4' }
+];
+
+const categoryToVideoId = {
+  All: 'house_tour',
+  Cabin: 'livingspace',
+  Villa: 'bathroom',
+  Loft: 'kitchen',
+  Dome: 'livingspace',
+  Heritage: 'house_tour'
+};
+
 export default function Hero({ activeCategory, setActiveCategory }) {
   return (
     <div style={{
       position: 'relative',
-      padding: '4rem 0 2rem 0',
+      padding: '5rem 0 3rem 0',
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       gap: '1.5rem',
-      background: 'radial-gradient(circle at top, rgba(224, 122, 95, 0.08) 0%, transparent 60%)'
+      overflow: 'hidden',
+      background: 'var(--bg-primary)',
+      minHeight: '420px',
+      justifyContent: 'center'
     }}>
-      {/* Intro Badging */}
-      <span className="accent-badge anim-fade" style={{
-        letterSpacing: '1px',
-        textTransform: 'uppercase',
-        fontSize: '0.75rem'
-      }}>
-        Introducing VelaStays
-      </span>
+      {/* Background Videos (Pre-loaded with smooth cross-fade) */}
+      {uniqueVideos.map((video) => {
+        const isActive = categoryToVideoId[activeCategory] === video.id;
+        return (
+          <video
+            key={video.id}
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0,
+              opacity: isActive ? 0.3 : 0,
+              filter: 'brightness(0.9) contrast(1.05) saturate(1.15)',
+              pointerEvents: 'none',
+              transition: 'opacity 1.2s ease-in-out'
+            }}
+          >
+            <source 
+              src={video.url} 
+              type="video/mp4" 
+            />
+          </video>
+        );
+      })}
 
-      {/* Main Premium Heading */}
-      <h1 className="anim-slide-up" style={{
-        fontSize: 'clamp(2.2rem, 5vw, 4rem)',
+      {/* Radial and Linear Gradient Overlays to blend the video with the app theme */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'radial-gradient(circle at center, transparent 20%, var(--bg-primary) 90%)',
+        zIndex: 1,
+        pointerEvents: 'none'
+      }} />
+      
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'linear-gradient(to bottom, rgba(14, 61, 62, 0.05) 0%, transparent 50%, var(--bg-primary) 100%)',
+        zIndex: 1,
+        pointerEvents: 'none'
+      }} />
+
+      {/* Hero Content Wrapper */}
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '1.25rem',
         maxWidth: '850px',
-        margin: '0 auto',
-        fontWeight: '700',
-        lineHeight: 1.15
+        width: '100%',
+        padding: '0 1rem'
       }}>
-        Book Architecturally <br className="desktop-only" />
-        <span className="text-gradient">Stunning Escapes</span>
-      </h1>
+        {/* Intro Badging */}
+        <span className="accent-badge anim-fade" style={{
+          letterSpacing: '1px',
+          textTransform: 'uppercase',
+          fontSize: '0.75rem',
+          backdropFilter: 'blur(4px)',
+          background: 'rgba(224, 122, 95, 0.12)'
+        }}>
+          Introducing VelaStays
+        </span>
 
-      {/* Supporting Text */}
-      <p className="anim-slide-up" style={{
-        fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-        color: 'var(--text-secondary)',
-        maxWidth: '600px',
-        margin: '0 auto',
-        lineHeight: 1.6,
-        animationDelay: '0.1s'
-      }}>
-        A curated collection of design-forward, boutique homestays, deep forest cabins, cliffside infinity villas, and converted industrial lofts.
-      </p>
+        {/* Main Premium Heading */}
+        <h1 className="anim-slide-up" style={{
+          fontSize: 'clamp(2.4rem, 6vw, 4.2rem)',
+          fontWeight: '700',
+          lineHeight: 1.1,
+          margin: 0
+        }}>
+          Book Architecturally <br className="desktop-only" />
+          <span className="text-gradient">Stunning Escapes</span>
+        </h1>
+
+        {/* Supporting Text */}
+        <p className="anim-slide-up" style={{
+          fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+          color: 'var(--text-secondary)',
+          maxWidth: '620px',
+          margin: '0.5rem auto 0 auto',
+          lineHeight: 1.6,
+          animationDelay: '0.1s'
+        }}>
+          A curated collection of design-forward, boutique homestays, deep forest cabins, cliffside infinity villas, and converted industrial lofts.
+        </p>
+      </div>
 
       {/* Categories Scroller */}
-      <div className="container" style={{ width: '100%', marginTop: '2rem' }}>
+      <div className="container" style={{ width: '100%', marginTop: '2.5rem', position: 'relative', zIndex: 2 }}>
         <div className="category-bar custom-scrollbar" style={{
           display: 'flex',
           justifyContent: 'center',

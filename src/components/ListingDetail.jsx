@@ -11,6 +11,7 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
   } = listing;
 
   const [activeImage, setActiveImage] = useState(images[0]);
+  const [mediaMode, setMediaMode] = useState('photos');
 
   return (
     <div className="anim-fade" style={{
@@ -115,13 +116,83 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
                 height: '450px',
                 marginBottom: '1rem',
                 border: '1px solid var(--border-color)',
-                boxShadow: 'var(--card-shadow)'
+                boxShadow: 'var(--card-shadow)',
+                position: 'relative'
               }} className="detail-main-img-box">
-                <img 
-                  src={activeImage} 
-                  alt={title} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                />
+                {/* Media Toggle overlay */}
+                {listing.video && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '16px',
+                    zIndex: 20,
+                    background: 'rgba(15, 23, 42, 0.65)',
+                    backdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '30px',
+                    padding: '4px',
+                    display: 'flex',
+                    gap: '4px',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                  }}>
+                    <button
+                      onClick={() => setMediaMode('photos')}
+                      style={{
+                        background: mediaMode === 'photos' ? 'var(--accent)' : 'transparent',
+                        border: 'none',
+                        color: '#fff',
+                        padding: '6px 14px',
+                        borderRadius: '20px',
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
+                      Photos
+                    </button>
+                    <button
+                      onClick={() => setMediaMode('video')}
+                      style={{
+                        background: mediaMode === 'video' ? 'var(--accent)' : 'transparent',
+                        border: 'none',
+                        color: '#fff',
+                        padding: '6px 14px',
+                        borderRadius: '20px',
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
+                      Video Tour
+                    </button>
+                  </div>
+                )}
+
+                {mediaMode === 'video' && listing.video ? (
+                  <video
+                    src={listing.video}
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <img 
+                    src={activeImage} 
+                    alt={title} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  />
+                )}
               </div>
 
               {/* Thumbnails Row */}
