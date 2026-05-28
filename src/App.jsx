@@ -458,12 +458,46 @@ export default function App() {
                 <button
                   onClick={() => setCollectionFilter([])}
                   className={`btn ${collectionFilter.length === 0 ? 'btn-primary' : 'btn-secondary'}`}
-                  style={{ borderRadius: '20px', padding: '0.5rem 1.2rem', fontSize: '0.85rem' }}
+                  style={{ 
+                    borderRadius: '20px', 
+                    padding: '0.4rem 1.2rem', 
+                    fontSize: '0.85rem',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    height: '36px'
+                  }}
                 >
-                  All Collections
+                  <div style={{
+                    width: '18px',
+                    height: '18px',
+                    borderRadius: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: collectionFilter.length === 0 ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.05)',
+                    transition: 'all var(--transition-fast)'
+                  }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                  </div>
+                  <span>All Collections</span>
                 </button>
                 {['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].map(cat => {
                   const isActive = collectionFilter.includes(cat);
+                  const imageMap = {
+                    Cabin: '/images/cabin/cabin_1.jpg',
+                    Villa: '/images/villa/villa_1.jpg',
+                    Loft: '/images/loft/loft_1.jpg',
+                    Dome: '/images/dome/dome_1.jpg',
+                    Heritage: '/images/heritage/heritage_1.jpg'
+                  };
+                  const labelMap = {
+                    Cabin: 'Cabins',
+                    Villa: 'Villas',
+                    Loft: 'Lofts',
+                    Dome: 'Domes',
+                    Heritage: 'Heritages'
+                  };
                   return (
                     <button
                       key={cat}
@@ -477,9 +511,28 @@ export default function App() {
                         });
                       }}
                       className={`btn ${isActive ? 'btn-primary' : 'btn-secondary'}`}
-                      style={{ borderRadius: '20px', padding: '0.5rem 1.2rem', fontSize: '0.85rem' }}
+                      style={{ 
+                        borderRadius: '20px', 
+                        padding: '0.4rem 1.2rem', 
+                        fontSize: '0.85rem',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        height: '36px'
+                      }}
                     >
-                      {cat}s
+                      <img 
+                        src={imageMap[cat]} 
+                        alt={cat}
+                        style={{
+                          width: '18px',
+                          height: '18px',
+                          borderRadius: '4px',
+                          objectFit: 'cover',
+                          border: isActive ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid var(--border-color)'
+                        }}
+                      />
+                      <span>{labelMap[cat]}</span>
                     </button>
                   );
                 })}

@@ -4,26 +4,27 @@ import { Compass, Tent, Trees, Layers, Landmark, Sunset } from 'lucide-react';
 
 const categories = [
   { id: 'All', label: 'All Stays', icon: Compass },
-  { id: 'Cabin', label: 'Cabins', icon: Tent },
-  { id: 'Villa', label: 'Villas', icon: Sunset },
-  { id: 'Loft', label: 'Lofts', icon: Layers },
-  { id: 'Dome', label: 'Domes', icon: Trees },
-  { id: 'Heritage', label: 'Heritage', icon: Landmark }
+  { id: 'Cabin', label: 'Cabins', icon: Tent, image: '/images/cabin/cabin_1.jpg' },
+  { id: 'Villa', label: 'Villas', icon: Sunset, image: '/images/villa/villa_1.jpg' },
+  { id: 'Loft', label: 'Lofts', icon: Layers, image: '/images/loft/loft_1.jpg' },
+  { id: 'Dome', label: 'Domes', icon: Trees, image: '/images/dome/dome_1.jpg' },
+  { id: 'Heritage', label: 'Heritage', icon: Landmark, image: '/images/heritage/heritage_1.jpg' }
 ];
 
 const uniqueVideos = [
-  { id: 'house_tour', url: 'https://res.cloudinary.com/demo/video/upload/house_tour.mp4' },
-  { id: 'livingspace', url: 'https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4' },
-  { id: 'bathroom', url: 'https://res.cloudinary.com/demo/video/upload/docs/bathroom.mp4' },
-  { id: 'kitchen', url: 'https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4' }
+  { id: 'house_tour', url: '/videos/house_tour.mp4' },
+  { id: 'livingspace', url: '/videos/livingspace.mp4' },
+  { id: 'bathroom', url: '/videos/bathroom.mp4' },
+  { id: 'kitchen', url: '/videos/kitchen.mp4' },
+  { id: 'coastal', url: '/videos/glide-over-coastal-beach.mp4' }
 ];
 
 const categoryToVideoId = {
   All: 'house_tour',
   Cabin: 'livingspace',
-  Villa: 'bathroom',
+  Villa: 'coastal',
   Loft: 'kitchen',
-  Dome: 'livingspace',
+  Dome: 'bathroom',
   Heritage: 'house_tour'
 };
 
@@ -65,8 +66,8 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
               height: '100%',
               objectFit: 'cover',
               zIndex: 0,
-              opacity: isActive ? 0.3 : 0,
-              filter: 'brightness(0.9) contrast(1.05) saturate(1.15)',
+              opacity: isActive ? 'var(--hero-video-opacity, 0.3)' : 0,
+              filter: 'var(--hero-video-filter, brightness(0.9) contrast(1.05) saturate(1.15))',
               pointerEvents: 'none',
               transition: 'opacity 1.2s ease-in-out'
             }}
@@ -79,14 +80,14 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
         );
       })}
 
-      {/* Top and Bottom Gradient Overlays to blend vertically while keeping left & right sides crisp and full-width */}
+      {/* Hero Video Translucent Color Overlay to keep text readable while keeping video fully visible */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'linear-gradient(to bottom, var(--bg-primary) 0%, transparent 15%, transparent 80%, var(--bg-primary) 100%)',
+        background: 'var(--hero-overlay-bg, rgba(0, 0, 0, 0.4))',
         zIndex: 1,
         pointerEvents: 'none'
       }} />
@@ -104,7 +105,7 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
         padding: '0 1rem'
       }}>
         {/* Intro Badging */}
-        <span className="accent-badge anim-fade" style={{
+        <span className="accent-badge hero-badge-entrance" style={{
           letterSpacing: '1px',
           textTransform: 'uppercase',
           fontSize: '0.75rem',
@@ -115,7 +116,7 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
         </span>
 
         {/* Main Premium Heading */}
-        <h1 className="anim-slide-up" style={{
+        <h1 className="hero-title-entrance" style={{
           fontSize: 'clamp(2.4rem, 6vw, 4.2rem)',
           fontWeight: '700',
           lineHeight: 1.1,
@@ -126,13 +127,12 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
         </h1>
 
         {/* Supporting Text */}
-        <p className="anim-slide-up" style={{
+        <p className="hero-subtitle-entrance" style={{
           fontSize: 'clamp(1rem, 2vw, 1.15rem)',
           color: 'var(--text-secondary)',
           maxWidth: '620px',
           margin: '0.5rem auto 0 auto',
-          lineHeight: 1.6,
-          animationDelay: '0.1s'
+          lineHeight: 1.6
         }}>
           A curated collection of design-forward, boutique homestays, deep forest cabins, cliffside infinity villas, and converted industrial lofts.
         </p>
@@ -173,10 +173,37 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
                   fontSize: '0.85rem'
                 }}
               >
-                <Icon size={20} style={{
-                  color: isActive ? 'var(--accent)' : 'var(--text-tertiary)',
-                  transition: 'color var(--transition-fast)'
-                }} />
+                {cat.image ? (
+                  <img
+                    src={cat.image}
+                    alt={cat.label}
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      borderRadius: '8px',
+                      objectFit: 'cover',
+                      border: isActive ? '2px solid var(--accent)' : '1px solid var(--border-color)',
+                      transition: 'all var(--transition-fast)',
+                      filter: isActive ? 'none' : 'grayscale(25%) brightness(0.95)'
+                    }}
+                  />
+                ) : (
+                  <div style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: isActive ? 'rgba(224, 122, 95, 0.15)' : 'var(--bg-tertiary)',
+                    border: isActive ? '2px solid var(--accent)' : '1px solid var(--border-color)',
+                    transition: 'all var(--transition-fast)'
+                  }}>
+                    <Icon size={14} style={{
+                      color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
+                    }} />
+                  </div>
+                )}
                 <span>{cat.label}</span>
               </div>
             );
