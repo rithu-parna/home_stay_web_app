@@ -41,8 +41,8 @@ export default function App() {
   const [listings, setListings] = useState(() => {
     const cached = localStorage.getItem('vela-listings');
     const parsed = cached ? JSON.parse(cached) : null;
-    
-    const needsReset = !parsed || parsed.length < listingsData.length || 
+
+    const needsReset = !parsed || parsed.length < listingsData.length ||
       parsed.some((lst, idx) => {
         const fresh = listingsData[idx];
         return !fresh || JSON.stringify(lst.images) !== JSON.stringify(fresh.images) || lst.video !== fresh.video;
@@ -78,11 +78,11 @@ export default function App() {
   const filteredListings = listings.filter(l => {
     // Category match: if activeCategories is empty, match everything
     const matchesCategory = activeCategories.length === 0 || activeCategories.includes(l.category);
-    
+
     // Search match
     const lowerSearch = searchQuery.toLowerCase().trim();
-    const matchesSearch = !lowerSearch || 
-      l.location.toLowerCase().includes(lowerSearch) || 
+    const matchesSearch = !lowerSearch ||
+      l.location.toLowerCase().includes(lowerSearch) ||
       l.title.toLowerCase().includes(lowerSearch);
 
     return matchesCategory && matchesSearch;
@@ -129,7 +129,7 @@ export default function App() {
 
       // Collections page infinite scroll
       if (activeTab === 'collections' && !isCollectionsLoadingMore) {
-        const categoriesToRender = ['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].filter(cat => 
+        const categoriesToRender = ['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].filter(cat =>
           collectionFilter.length === 0 || collectionFilter.includes(cat)
         );
         const totalMatchingStays = listings.filter(l => categoriesToRender.includes(l.category)).length;
@@ -179,7 +179,7 @@ export default function App() {
       setShowAuthModal(true);
       return;
     }
-    setSavedIds(prev => 
+    setSavedIds(prev =>
       prev.includes(id) ? prev.filter(savedId => savedId !== id) : [...prev, id]
     );
   };
@@ -261,7 +261,7 @@ export default function App() {
       listing: activeListing,
       ...bookingSummary
     };
-    
+
     // Add reservation
     setReservations(prev => [newReservation, ...prev]);
     // Save to show confirmation receipt modal
@@ -284,9 +284,9 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      
+
       {/* Dynamic Navigation Header */}
-      <Navbar 
+      <Navbar
         theme={theme}
         toggleTheme={toggleTheme}
         activeTab={activeTab}
@@ -305,7 +305,7 @@ export default function App() {
           <div className="anim-fade">
             {/* Jumbotron and Category Selector */}
             <Hero activeCategories={activeCategories} setActiveCategories={setActiveCategories} />
-            
+
             {/* Trending Escapes Section */}
             <div className="container" style={{ paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
               <div style={{
@@ -324,7 +324,7 @@ export default function App() {
                     Most popular design marvels highly rated by architectural explorers.
                   </p>
                 </div>
-                <button 
+                <button
                   onClick={() => setActiveTab('collections')}
                   className="btn btn-secondary"
                   style={{
@@ -353,7 +353,7 @@ export default function App() {
               }}>
                 {listings.filter(l => l.isTrending).map(listing => (
                   <div key={listing.id} style={{ minWidth: '310px', maxWidth: '310px', scrollSnapAlign: 'start' }}>
-                    <ListingCard 
+                    <ListingCard
                       listing={listing}
                       isSaved={savedIds.includes(listing.id)}
                       onToggleSave={handleToggleSave}
@@ -367,8 +367,8 @@ export default function App() {
             {/* Grid display of available stays */}
             <div className="container" style={{ paddingBottom: '5rem', borderTop: '1px solid var(--border-color)', paddingTop: '2.5rem' }}>
               <h2 style={{ fontSize: '1.8rem', fontWeight: '700', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem' }}>
-                {activeCategories.length === 0 
-                  ? 'All Architectural Escapes' 
+                {activeCategories.length === 0
+                  ? 'All Architectural Escapes'
                   : `${activeCategories.join(' & ')} Collection`}
               </h2>
 
@@ -393,7 +393,7 @@ export default function App() {
                 <>
                   <div className="listings-grid">
                     {filteredListings.slice(0, visibleExploreLimit).map(listing => (
-                      <ListingCard 
+                      <ListingCard
                         key={listing.id}
                         listing={listing}
                         isSaved={savedIds.includes(listing.id)}
@@ -439,7 +439,7 @@ export default function App() {
 
         {/* Collections Tab Page */}
         {activeTab === 'collections' && (
-          <div className="container anim-fade" style={{ paddingTop: '2.5rem', paddingBottom: '5rem' }}>
+          <div className="container anim-fade" style={{  }}>
             <div style={{ marginBottom: '2.5rem' }}>
               <h2 style={{ fontSize: 'clamp(1.6rem, 5.5vw, 2.5rem)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
                 Design Collections
@@ -462,7 +462,7 @@ export default function App() {
                     className={`collections-sidebar-item ${collectionFilter.length === 0 ? 'active' : ''}`}
                   >
                     <div className="icon-wrapper">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></svg>
                     </div>
                     <div style={{ textAlign: 'left', flexGrow: 1 }}>
                       <div style={{ fontWeight: 600, fontSize: '0.88rem' }}>All Curations</div>
@@ -474,9 +474,9 @@ export default function App() {
                   {/* Individual Categories */}
                   {['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].map(cat => {
                     const isActive = collectionFilter.includes(cat);
-                    const imageMap = { Cabin:'/images/cabin/cabin_1.jpg', Villa:'/images/villa/villa_1.jpg', Loft:'/images/loft/loft_1.jpg', Dome:'/images/dome/dome_1.jpg', Heritage:'/images/heritage/heritage_1.jpg' };
-                    const labelMap = { Cabin:'Cabins', Villa:'Villas', Loft:'Lofts', Dome:'Domes', Heritage:'Heritages' };
-                    const descMap = { Cabin:'Forest retreats', Villa:'Luxury villas', Loft:'Urban lofts', Dome:'Geodesic domes', Heritage:'Historic sites' };
+                    const imageMap = { Cabin: '/images/cabin/cabin_1.jpg', Villa: '/images/villa/villa_1.jpg', Loft: '/images/loft/loft_1.jpg', Dome: '/images/dome/dome_1.jpg', Heritage: '/images/heritage/heritage_1.jpg' };
+                    const labelMap = { Cabin: 'Cabins', Villa: 'Villas', Loft: 'Lofts', Dome: 'Domes', Heritage: 'Heritages' };
+                    const descMap = { Cabin: 'Forest retreats', Villa: 'Luxury villas', Loft: 'Urban lofts', Dome: 'Geodesic domes', Heritage: 'Historic sites' };
                     const count = listings.filter(l => l.category === cat).length;
 
                     return (
@@ -506,14 +506,14 @@ export default function App() {
                       onClick={() => setFilterSheetOpen(true)}
                       className="collections-mobile-filter-btn"
                     >
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="4" y1="6" x2="20" y2="6" /><line x1="8" y1="12" x2="16" y2="12" /><line x1="11" y1="18" x2="13" y2="18" /></svg>
                       <span>Filter Typologies</span>
                       {collectionFilter.length > 0 && (
                         <span className="filter-count-pill">{collectionFilter.length}</span>
                       )}
                     </button>
                     {collectionFilter.length > 0 && (
-                      <button 
+                      <button
                         onClick={() => setCollectionFilter([])}
                         style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 600 }}
                       >
@@ -521,7 +521,7 @@ export default function App() {
                       </button>
                     )}
                   </div>
-                  
+
                   {collectionFilter.length > 0 && (
                     <div className="active-filter-chips custom-scrollbar">
                       {collectionFilter.map(cat => (
@@ -593,18 +593,23 @@ export default function App() {
                             ×
                           </button>
                         </div>
-                         {/* Advanced category grid in bottom sheet */}
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '2rem' }}>
-                        {/* All Collections Row (Full Width) */}
+                      </div>
+
+                      {/* Advanced category list in bottom sheet */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+                        {/* All Collections Row */}
                         <div
                           onClick={() => setCollectionFilter([])}
                           style={{
-                            position: 'relative',
-                            borderRadius: '18px',
-                            overflow: 'hidden',
-                            gridColumn: '1 / -1',
-                            height: '76px',
-                            border: collectionFilter.length === 0 ? '3px solid var(--accent)' : '2.5px solid var(--border-color)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            padding: '0.9rem 1.1rem',
+                            borderRadius: '16px',
+                            background: collectionFilter.length === 0 ? 'var(--accent-gradient)' : 'var(--bg-tertiary)',
+                            border: '1.5px solid',
+                            borderColor: collectionFilter.length === 0 ? 'transparent' : 'var(--border-color)',
+                            color: collectionFilter.length === 0 ? '#fff' : 'var(--text-primary)',
                             boxShadow: collectionFilter.length === 0 ? '0 8px 24px rgba(224,122,95,0.22)' : 'none',
                             cursor: 'pointer',
                             transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -612,150 +617,135 @@ export default function App() {
                           }}
                         >
                           <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            background: 'linear-gradient(135deg, #1c2331 0%, #0d1117 100%)'
-                          }} />
-                          
-                          <div style={{
-                            position: 'absolute',
-                            right: '-10px',
-                            bottom: '-10px',
-                            opacity: 0.12,
-                            color: '#fff'
-                          }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                          </div>
-
-                          <div style={{
-                            position: 'absolute',
-                            inset: 0,
+                            width: '42px',
+                            height: '42px',
+                            borderRadius: '12px',
+                            background: collectionFilter.length === 0 ? 'rgba(255,255,255,0.2)' : 'rgba(224,122,95,0.08)',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'space-between',
-                            padding: '0 1.1rem',
-                            color: '#fff',
-                            zIndex: 2
+                            justifyContent: 'center',
+                            color: collectionFilter.length === 0 ? '#fff' : 'var(--accent)',
+                            flexShrink: 0
                           }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                              <div style={{
-                                width: '36px',
-                                height: '36px',
-                                borderRadius: '10px',
-                                background: 'rgba(255,255,255,0.12)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                              </div>
-                              <div style={{ textAlign: 'left' }}>
-                                <div style={{ fontWeight: 700, fontSize: '0.92rem' }}>All Collections</div>
-                                <div style={{ fontSize: '0.68rem', color: 'rgba(255, 255, 255, 0.7)' }}>Show entire catalogue</div>
-                              </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></svg>
+                          </div>
+
+                          <div style={{ textAlign: 'left', flexGrow: 1 }}>
+                            <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>All Collections</div>
+                            <div style={{ fontSize: '0.75rem', color: collectionFilter.length === 0 ? 'rgba(255, 255, 255, 0.8)' : 'var(--text-secondary)', marginTop: '2px' }}>
+                              Show entire archive catalogue
                             </div>
-                            
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                              <span style={{ fontSize: '0.68rem', fontWeight: 700, background: 'rgba(255, 255, 255, 0.2)', padding: '0.15rem 0.4rem', borderRadius: '6px' }}>
-                                {listings.length} stays
-                              </span>
-                              <div style={{
-                                width: '20px',
-                                height: '20px',
-                                borderRadius: '50%',
-                                border: collectionFilter.length === 0 ? '2px solid #fff' : '2px solid rgba(255, 255, 255, 0.5)',
-                                background: collectionFilter.length === 0 ? 'var(--accent)' : 'transparent',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}>
-                                {collectionFilter.length === 0 && (
-                                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" width="10" height="10"><polyline points="20 6 9 17 4 12"/></svg>
-                                )}
-                              </div>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', flexShrink: 0 }}>
+                            <span style={{
+                              fontSize: '0.75rem',
+                              fontWeight: 700,
+                              background: collectionFilter.length === 0 ? 'rgba(255, 255, 255, 0.2)' : 'var(--border-color)',
+                              padding: '0.2rem 0.5rem',
+                              borderRadius: '8px',
+                              color: collectionFilter.length === 0 ? '#fff' : 'var(--text-secondary)'
+                            }}>
+                              {listings.length} stays
+                            </span>
+                            <div style={{
+                              width: '22px',
+                              height: '22px',
+                              borderRadius: '50%',
+                              border: '2px solid',
+                              borderColor: collectionFilter.length === 0 ? '#fff' : 'var(--text-tertiary)',
+                              background: collectionFilter.length === 0 ? '#fff' : 'transparent',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              transition: 'all 0.2s ease'
+                            }}>
+                              {collectionFilter.length === 0 && (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" width="12" height="12"><polyline points="20 6 9 17 4 12" /></svg>
+                              )}
                             </div>
                           </div>
                         </div>
 
-                        {/* Individual Category Cards */}
-                        {['Cabin','Villa','Loft','Dome','Heritage'].map(cat => {
+                        {/* Individual Category Rows */}
+                        {['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].map(cat => {
                           const isActive = collectionFilter.includes(cat);
-                          const imageMap = { Cabin:'/images/cabin/cabin_1.jpg', Villa:'/images/villa/villa_1.jpg', Loft:'/images/loft/loft_1.jpg', Dome:'/images/dome/dome_1.jpg', Heritage:'/images/heritage/heritage_1.jpg' };
-                          const labelMap = { Cabin:'Cabins', Villa:'Villas', Loft:'Lofts', Dome:'Domes', Heritage:'Heritages' };
-                          const descMap = { Cabin:'Forest stays', Villa:'Luxury stays', Loft:'Urban spaces', Dome:'Geodesic stays', Heritage:'Heritage sites' };
+                          const imageMap = { Cabin: '/images/cabin/cabin_1.jpg', Villa: '/images/villa/villa_1.jpg', Loft: '/images/loft/loft_1.jpg', Dome: '/images/dome/dome_1.jpg', Heritage: '/images/heritage/heritage_1.jpg' };
+                          const labelMap = { Cabin: 'Cabins', Villa: 'Villas', Loft: 'Lofts', Dome: 'Domes', Heritage: 'Heritages' };
+                          const descMap = { Cabin: 'Scenic forest retreats', Villa: 'Exclusive luxury stays', Loft: 'Modern urban spaces', Dome: 'Unique geodesic domes', Heritage: 'Historic cultural sites' };
                           const count = listings.filter(l => l.category === cat).length;
                           return (
                             <div
                               key={cat}
                               onClick={() => setCollectionFilter(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat])}
                               style={{
-                                position: 'relative',
-                                borderRadius: '18px',
-                                overflow: 'hidden',
-                                aspectRatio: '1.25',
-                                border: isActive ? '3px solid var(--accent)' : '2.5px solid var(--border-color)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '1rem',
+                                padding: '0.9rem 1.1rem',
+                                borderRadius: '16px',
+                                background: isActive ? 'var(--accent-gradient)' : 'var(--bg-tertiary)',
+                                border: '1.5px solid',
+                                borderColor: isActive ? 'transparent' : 'var(--border-color)',
+                                color: isActive ? '#fff' : 'var(--text-primary)',
                                 boxShadow: isActive ? '0 8px 24px rgba(224,122,95,0.22)' : 'none',
                                 cursor: 'pointer',
                                 transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-                                transform: isActive ? 'scale(0.97)' : 'scale(1)'
+                                transform: isActive ? 'scale(0.98)' : 'scale(1)'
                               }}
                             >
-                              <img src={imageMap[cat]} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease', transform: isActive ? 'scale(1.06)' : 'scale(1)' }} />
-                              
-                              {/* Dark gradient overlay */}
-                              <div style={{
-                                position: 'absolute',
-                                inset: 0,
-                                background: 'linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 65%, rgba(0, 0, 0, 0.3) 100%)'
-                              }} />
-                              
-                              {/* Top-Right Bubble Checkmark */}
-                              <div style={{
-                                position: 'absolute',
-                                top: '8px',
-                                right: '8px',
-                                width: '22px',
-                                height: '22px',
-                                borderRadius: '50%',
-                                border: isActive ? '2px solid #fff' : '2px solid rgba(255, 255, 255, 0.5)',
-                                background: isActive ? 'var(--accent)' : 'rgba(0, 0, 0, 0.2)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                transition: 'all 0.2s ease',
-                                zIndex: 2
-                              }}>
-                                {isActive && (
-                                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" width="10" height="10"><polyline points="20 6 9 17 4 12"/></svg>
-                                )}
+                              <img
+                                src={imageMap[cat]}
+                                alt={cat}
+                                style={{
+                                  width: '42px',
+                                  height: '42px',
+                                  borderRadius: '12px',
+                                  objectFit: 'cover',
+                                  flexShrink: 0,
+                                  border: isActive ? '1.5px solid rgba(255, 255, 255, 0.6)' : '1px solid var(--border-color)'
+                                }}
+                              />
+
+                              <div style={{ textAlign: 'left', flexGrow: 1 }}>
+                                <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>{labelMap[cat]}</div>
+                                <div style={{ fontSize: '0.75rem', color: isActive ? 'rgba(255, 255, 255, 0.8)' : 'var(--text-secondary)', marginTop: '2px' }}>
+                                  {descMap[cat]}
+                                </div>
                               </div>
 
-                              {/* Bottom Text Content */}
-                              <div style={{
-                                position: 'absolute',
-                                bottom: '10px',
-                                left: '10px',
-                                right: '10px',
-                                color: '#fff',
-                                zIndex: 2,
-                                textAlign: 'left'
-                              }}>
-                                <div style={{ fontWeight: 700, fontSize: '0.88rem', letterSpacing: '0.01em', marginBottom: '0.1rem' }}>
-                                  {labelMap[cat]}
-                                </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                  <span style={{ fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.7)' }}>
-                                    {descMap[cat]}
-                                  </span>
-                                  <span style={{ fontSize: '0.6rem', fontWeight: 700, background: 'rgba(255, 255, 255, 0.25)', padding: '0.1rem 0.3rem', borderRadius: '4px' }}>
-                                    {count}
-                                  </span>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', flexShrink: 0 }}>
+                                <span style={{
+                                  fontSize: '0.75rem',
+                                  fontWeight: 700,
+                                  background: isActive ? 'rgba(255, 255, 255, 0.2)' : 'var(--border-color)',
+                                  padding: '0.2rem 0.5rem',
+                                  borderRadius: '8px',
+                                  color: isActive ? '#fff' : 'var(--text-secondary)'
+                                }}>
+                                  {count} stays
+                                </span>
+                                <div style={{
+                                  width: '22px',
+                                  height: '22px',
+                                  borderRadius: '50%',
+                                  border: '2px solid',
+                                  borderColor: isActive ? '#fff' : 'var(--text-tertiary)',
+                                  background: isActive ? '#fff' : 'transparent',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  transition: 'all 0.2s ease'
+                                }}>
+                                  {isActive && (
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" width="12" height="12"><polyline points="20 6 9 17 4 12" /></svg>
+                                  )}
                                 </div>
                               </div>
                             </div>
                           );
                         })}
-                      </div>                     </div>
+                      </div>
 
                       {/* Apply button container inside modal */}
                       <button
@@ -769,102 +759,102 @@ export default function App() {
                   </>
                 )}
 
-            {/* Render each category as a dedicated horizontal collection */}
-            {(() => {
-              let renderedCount = 0;
-              const categoriesToRender = ['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].filter(cat => 
-                collectionFilter.length === 0 || collectionFilter.includes(cat)
-              );
-              
-              // Count total matching stays to see if we need a "Load More" button
-              const totalMatchingStays = listings.filter(l => 
-                categoriesToRender.includes(l.category)
-              ).length;
+                {/* Render each category as a dedicated horizontal collection */}
+                {(() => {
+                  let renderedCount = 0;
+                  const categoriesToRender = ['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].filter(cat =>
+                    collectionFilter.length === 0 || collectionFilter.includes(cat)
+                  );
 
-              const elements = categoriesToRender.map(catName => {
-                // If we have already reached the visible limit, skip rendering this collection group
-                if (renderedCount >= visibleCollectionLimit) return null;
+                  // Count total matching stays to see if we need a "Load More" button
+                  const totalMatchingStays = listings.filter(l =>
+                    categoriesToRender.includes(l.category)
+                  ).length;
 
-                const catStays = listings.filter(l => l.category === catName);
-                if (catStays.length === 0) return null;
+                  const elements = categoriesToRender.map(catName => {
+                    // If we have already reached the visible limit, skip rendering this collection group
+                    if (renderedCount >= visibleCollectionLimit) return null;
 
-                // Slice stays for this category to not exceed the remaining visible limit
-                const remainingLimit = visibleCollectionLimit - renderedCount;
-                const displayedStays = catStays.slice(0, remainingLimit);
-                renderedCount += displayedStays.length;
+                    const catStays = listings.filter(l => l.category === catName);
+                    if (catStays.length === 0) return null;
 
-                return (
-                  <div key={catName} style={{ marginBottom: '3.5rem' }}>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'baseline',
-                      borderBottom: '1px solid var(--border-color)',
-                      paddingBottom: '0.75rem',
-                      marginBottom: '1.25rem'
-                    }}>
-                      <h3 style={{ fontSize: 'clamp(1.2rem, 4.5vw, 1.6rem)', fontWeight: '600', margin: 0 }}>
-                        {catName}s
-                      </h3>
-                      <span 
-                        onClick={() => {
-                          setActiveCategories([catName]);
-                          setActiveTab('explore');
-                        }}
-                        style={{
-                          fontSize: 'clamp(0.78rem, 3.2vw, 0.88rem)',
-                          fontWeight: 600,
-                          color: 'var(--accent)',
-                          cursor: 'pointer',
-                          transition: 'color 0.2s ease'
-                        }}
-                      >
-                        Browse All {catName}s →
-                      </span>
-                    </div>
+                    // Slice stays for this category to not exceed the remaining visible limit
+                    const remainingLimit = visibleCollectionLimit - renderedCount;
+                    const displayedStays = catStays.slice(0, remainingLimit);
+                    renderedCount += displayedStays.length;
 
-                    <div className="custom-scrollbar" style={{
-                      display: 'flex',
-                      gap: '1.5rem',
-                      overflowX: 'auto',
-                      paddingBottom: '1rem',
-                      scrollSnapType: 'x mandatory'
-                    }}>
-                      {displayedStays.map(listing => (
-                        <div key={listing.id} style={{ minWidth: 'clamp(270px, 85vw, 310px)', maxWidth: '310px', scrollSnapAlign: 'start' }}>
-                          <ListingCard 
-                            listing={listing}
-                            isSaved={savedIds.includes(listing.id)}
-                            onToggleSave={handleToggleSave}
-                            onClick={() => setActiveListing(listing)}
-                          />
+                    return (
+                      <div key={catName} style={{ marginBottom: '3.5rem' }}>
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'baseline',
+                          borderBottom: '1px solid var(--border-color)',
+                          paddingBottom: '0.75rem',
+                          marginBottom: '1.25rem'
+                        }}>
+                          <h3 style={{ fontSize: 'clamp(1.2rem, 4.5vw, 1.6rem)', fontWeight: '600', margin: 0 }}>
+                            {catName}s
+                          </h3>
+                          <span
+                            onClick={() => {
+                              setActiveCategories([catName]);
+                              setActiveTab('explore');
+                            }}
+                            style={{
+                              fontSize: 'clamp(0.78rem, 3.2vw, 0.88rem)',
+                              fontWeight: 600,
+                              color: 'var(--accent)',
+                              cursor: 'pointer',
+                              transition: 'color 0.2s ease'
+                            }}
+                          >
+                            Browse All {catName}s →
+                          </span>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              });
 
-              return (
-                <>
-                  {elements}
-                  {isCollectionsLoadingMore && (
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.6rem', padding: '2rem 0' }}>
-                      <div style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: 'var(--accent)',
-                        animation: 'auth-pulse 1s infinite ease-in-out'
-                      }} />
-                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
-                        Loading more collections...
-                      </span>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
+                        <div className="custom-scrollbar" style={{
+                          display: 'flex',
+                          gap: '1.5rem',
+                          overflowX: 'auto',
+                          paddingBottom: '1rem',
+                          scrollSnapType: 'x mandatory'
+                        }}>
+                          {displayedStays.map(listing => (
+                            <div key={listing.id} style={{ minWidth: 'clamp(270px, 85vw, 310px)', maxWidth: '310px', scrollSnapAlign: 'start' }}>
+                              <ListingCard
+                                listing={listing}
+                                isSaved={savedIds.includes(listing.id)}
+                                onToggleSave={handleToggleSave}
+                                onClick={() => setActiveListing(listing)}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  });
+
+                  return (
+                    <>
+                      {elements}
+                      {isCollectionsLoadingMore && (
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.6rem', padding: '2rem 0' }}>
+                          <div style={{
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            background: 'var(--accent)',
+                            animation: 'auth-pulse 1s infinite ease-in-out'
+                          }} />
+                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                            Loading more collections...
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
               </div> {/* Close collections-main-content */}
             </div> {/* Close collections-layout-grid */}
           </div>
@@ -877,7 +867,7 @@ export default function App() {
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '2rem' }}>
               Your collection of architectural masterpieces, scenic forest cabins, and beach escapes.
             </p>
-            
+
             {savedStays.length === 0 ? (
               <div style={{
                 textAlign: 'center',
@@ -893,7 +883,7 @@ export default function App() {
                 <p style={{ fontSize: '0.95rem', maxWidth: '400px', margin: '0 auto' }}>
                   Tap the heart icons on stays as you browse the explore panel to build your dream bucket list here.
                 </p>
-                <button 
+                <button
                   onClick={() => setActiveTab('explore')}
                   className="btn btn-primary"
                   style={{ marginTop: '1.5rem', borderRadius: '10px' }}
@@ -904,7 +894,7 @@ export default function App() {
             ) : (
               <div className="listings-grid">
                 {savedStays.map(listing => (
-                  <ListingCard 
+                  <ListingCard
                     key={listing.id}
                     listing={listing}
                     isSaved={true}
@@ -919,7 +909,7 @@ export default function App() {
 
         {/* Host Mode */}
         {activeTab === 'host' && (
-          <HostDashboard 
+          <HostDashboard
             listings={listings}
             onAddListing={handleAddListing}
             onDeleteListing={handleDeleteListing}
@@ -928,7 +918,7 @@ export default function App() {
 
         {/* User Profile / Dashboard */}
         {activeTab === 'profile' && (
-          <UserProfile 
+          <UserProfile
             user={user}
             updateUser={handleUpdateUser}
             reservations={reservations}
@@ -984,8 +974,8 @@ export default function App() {
                     transition: 'all 0.2s ease',
                     flexShrink: 0
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
                   >
                     <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15">
                       <path d={s.path} />
@@ -1072,8 +1062,8 @@ export default function App() {
                   whiteSpace: 'nowrap',
                   transition: 'opacity 0.18s ease'
                 }}
-                onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                  onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
+                  onMouseLeave={e => e.currentTarget.style.opacity = '1'}
                 >
                   Subscribe
                 </button>
@@ -1109,31 +1099,41 @@ export default function App() {
       {/* ─── MOBILE BOTTOM NAV BAR (visible only on small screens) ─── */}
       <nav className="mobile-bottom-nav">
         {[
-          { id: 'explore',     label: 'Explore',     icon: (active) => (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
-              <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-            </svg>
-          )},
-          { id: 'collections', label: 'Collections',  icon: (active) => (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-            </svg>
-          )},
-          { id: 'saved',       label: 'Saved',        icon: (active) => (
-            <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-          )},
-          { id: 'host',        label: 'Host',          icon: (active) => (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
-              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-            </svg>
-          )},
-          { id: 'profile',     label: 'Profile',       icon: (active) => (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-            </svg>
-          )}
+          {
+            id: 'explore', label: 'Explore', icon: (active) => (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
+                <circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+              </svg>
+            )
+          },
+          {
+            id: 'collections', label: 'Collections', icon: (active) => (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
+                <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
+              </svg>
+            )
+          },
+          {
+            id: 'saved', label: 'Saved', icon: (active) => (
+              <svg viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            )
+          },
+          {
+            id: 'host', label: 'Host', icon: (active) => (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
+                <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+              </svg>
+            )
+          },
+          {
+            id: 'profile', label: 'Profile', icon: (active) => (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+              </svg>
+            )
+          }
         ].map(({ id, label, icon }) => {
           const isActive = activeTab === id;
           return (
@@ -1151,7 +1151,7 @@ export default function App() {
 
       {/* Full Sheet Detail Viewer */}
       {activeListing && (
-        <ListingDetail 
+        <ListingDetail
           listing={activeListing}
           isSaved={savedIds.includes(activeListing.id)}
           onToggleSave={handleToggleSave}
@@ -1162,7 +1162,7 @@ export default function App() {
 
       {/* Booking Receipt Success Modal */}
       {activeReservation && (
-        <BookingSuccessModal 
+        <BookingSuccessModal
           reservation={activeReservation}
           listing={activeReservation.listing}
           onClose={() => {
@@ -1178,7 +1178,7 @@ export default function App() {
       <LocalConcierge />
 
       {/* Advanced Auth Modal */}
-      <AuthModal 
+      <AuthModal
         isOpen={showAuthModal}
         onClose={() => {
           setShowAuthModal(false);
@@ -1188,7 +1188,8 @@ export default function App() {
         onLoginSuccess={handleLoginSuccess}
       />
 
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes auth-pulse {
           0%, 100% { opacity: 0.3; transform: scale(0.95); }
           50% { opacity: 0.8; transform: scale(1.05); }
