@@ -35,6 +35,7 @@ export default function App() {
   const [visibleExploreLimit, setVisibleExploreLimit] = useState(10);
   const [collectionFilter, setCollectionFilter] = useState([]);
   const [visibleCollectionLimit, setVisibleCollectionLimit] = useState(10);
+  const [filterSheetOpen, setFilterSheetOpen] = useState(false);
 
   // Core Data States (Listings, Saves, Reservations)
   const [listings, setListings] = useState(() => {
@@ -440,104 +441,333 @@ export default function App() {
         {activeTab === 'collections' && (
           <div className="container anim-fade" style={{ paddingTop: '2.5rem', paddingBottom: '5rem' }}>
             <div style={{ marginBottom: '2.5rem' }}>
-              <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
+              <h2 style={{ fontSize: 'clamp(1.6rem, 5.5vw, 2.5rem)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
                 Design Collections
               </h2>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', maxWidth: '600px', marginBottom: '2rem' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(0.85rem, 3vw, 1rem)', maxWidth: '600px', marginBottom: '1.5rem' }}>
                 Explore boutique stays curated by architectural typology. Choose a category collection to view details.
               </p>
-
-              {/* Collections Category Filter Bar */}
-              <div style={{ 
-                display: 'flex', 
-                gap: '0.8rem', 
-                overflowX: 'auto', 
-                paddingBottom: '1rem',
-                borderBottom: '1px solid var(--border-color)'
-              }} className="custom-scrollbar">
-                <button
-                  onClick={() => setCollectionFilter([])}
-                  className={`btn ${collectionFilter.length === 0 ? 'btn-primary' : 'btn-secondary'}`}
-                  style={{ 
-                    borderRadius: '20px', 
-                    padding: '0.4rem 1.2rem', 
-                    fontSize: '0.85rem',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    height: '36px'
-                  }}
-                >
-                  <div style={{
-                    width: '18px',
-                    height: '18px',
-                    borderRadius: '4px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: collectionFilter.length === 0 ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.05)',
-                    transition: 'all var(--transition-fast)'
-                  }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                  </div>
-                  <span>All Collections</span>
-                </button>
-                {['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].map(cat => {
-                  const isActive = collectionFilter.includes(cat);
-                  const imageMap = {
-                    Cabin: '/images/cabin/cabin_1.jpg',
-                    Villa: '/images/villa/villa_1.jpg',
-                    Loft: '/images/loft/loft_1.jpg',
-                    Dome: '/images/dome/dome_1.jpg',
-                    Heritage: '/images/heritage/heritage_1.jpg'
-                  };
-                  const labelMap = {
-                    Cabin: 'Cabins',
-                    Villa: 'Villas',
-                    Loft: 'Lofts',
-                    Dome: 'Domes',
-                    Heritage: 'Heritages'
-                  };
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => {
-                        setCollectionFilter(prev => {
-                          if (prev.includes(cat)) {
-                            return prev.filter(c => c !== cat);
-                          } else {
-                            return [...prev, cat];
-                          }
-                        });
-                      }}
-                      className={`btn ${isActive ? 'btn-primary' : 'btn-secondary'}`}
-                      style={{ 
-                        borderRadius: '20px', 
-                        padding: '0.4rem 1.2rem', 
-                        fontSize: '0.85rem',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        height: '36px'
-                      }}
-                    >
-                      <img 
-                        src={imageMap[cat]} 
-                        alt={cat}
-                        style={{
-                          width: '18px',
-                          height: '18px',
-                          borderRadius: '4px',
-                          objectFit: 'cover',
-                          border: isActive ? '1px solid rgba(255, 255, 255, 0.4)' : '1px solid var(--border-color)'
-                        }}
-                      />
-                      <span>{labelMap[cat]}</span>
-                    </button>
-                  );
-                })}
-              </div>
             </div>
+
+            {/* ── DESKTOP: Advanced Sidebar Curation Panel ── */}
+            <div className="collections-layout-grid">
+              <aside className="collections-sidebar">
+                <h3 style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '1.25rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
+                  Typologies
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {/* All Collections Row */}
+                  <button
+                    onClick={() => setCollectionFilter([])}
+                    className={`collections-sidebar-item ${collectionFilter.length === 0 ? 'active' : ''}`}
+                  >
+                    <div className="icon-wrapper">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                    </div>
+                    <div style={{ textAlign: 'left', flexGrow: 1 }}>
+                      <div style={{ fontWeight: 600, fontSize: '0.88rem' }}>All Curations</div>
+                      <div style={{ fontSize: '0.72rem', opacity: 0.8 }}>View entire archive</div>
+                    </div>
+                    <span className="count-badge">{listings.length}</span>
+                  </button>
+
+                  {/* Individual Categories */}
+                  {['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].map(cat => {
+                    const isActive = collectionFilter.includes(cat);
+                    const imageMap = { Cabin:'/images/cabin/cabin_1.jpg', Villa:'/images/villa/villa_1.jpg', Loft:'/images/loft/loft_1.jpg', Dome:'/images/dome/dome_1.jpg', Heritage:'/images/heritage/heritage_1.jpg' };
+                    const labelMap = { Cabin:'Cabins', Villa:'Villas', Loft:'Lofts', Dome:'Domes', Heritage:'Heritages' };
+                    const descMap = { Cabin:'Forest retreats', Villa:'Luxury villas', Loft:'Urban lofts', Dome:'Geodesic domes', Heritage:'Historic sites' };
+                    const count = listings.filter(l => l.category === cat).length;
+
+                    return (
+                      <button
+                        key={cat}
+                        onClick={() => setCollectionFilter(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat])}
+                        className={`collections-sidebar-item ${isActive ? 'active' : ''}`}
+                      >
+                        <img src={imageMap[cat]} alt={cat} className="sidebar-item-thumb" />
+                        <div style={{ textAlign: 'left', flexGrow: 1 }}>
+                          <div style={{ fontWeight: 600, fontSize: '0.88rem' }}>{labelMap[cat]}</div>
+                          <div style={{ fontSize: '0.72rem', opacity: 0.8 }}>{descMap[cat]}</div>
+                        </div>
+                        <span className="count-badge">{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </aside>
+
+              {/* ── MAIN CONTENT (LISTING GROUPS) ── */}
+              <div className="collections-main-content">
+                {/* Mobile Trigger Button and Chip row */}
+                <div className="collections-filter-mobile-trigger-container">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.25rem' }}>
+                    <button
+                      onClick={() => setFilterSheetOpen(true)}
+                      className="collections-mobile-filter-btn"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+                      <span>Filter Typologies</span>
+                      {collectionFilter.length > 0 && (
+                        <span className="filter-count-pill">{collectionFilter.length}</span>
+                      )}
+                    </button>
+                    {collectionFilter.length > 0 && (
+                      <button 
+                        onClick={() => setCollectionFilter([])}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 600 }}
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                  
+                  {collectionFilter.length > 0 && (
+                    <div className="active-filter-chips custom-scrollbar">
+                      {collectionFilter.map(cat => (
+                        <span key={cat} className="filter-chip">
+                          {cat}s
+                          <button onClick={() => setCollectionFilter(prev => prev.filter(c => c !== cat))} className="chip-remove-btn">×</button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* ── MOBILE FILTER BOTTOM SHEET ── */}
+                {filterSheetOpen && (
+                  <>
+                    <div
+                      onClick={() => setFilterSheetOpen(false)}
+                      style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 2000, backdropFilter: 'blur(6px)' }}
+                    />
+                    <div style={{
+                      position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 2001,
+                      background: 'var(--bg-secondary)',
+                      borderRadius: '24px 24px 0 0',
+                      padding: '1.25rem 1.25rem 6.5rem',
+                      animation: 'slideUp 0.35s cubic-bezier(0.16,1,0.3,1) forwards',
+                      boxShadow: '0 -10px 40px rgba(0,0,0,0.3)',
+                      maxHeight: '85vh',
+                      overflowY: 'auto',
+                      maxWidth: '540px',
+                      margin: '0 auto'
+                    }} className="custom-scrollbar">
+                      {/* Handle bar */}
+                      <div style={{ width: '40px', height: '5px', borderRadius: '3px', background: 'var(--border-hover)', margin: '0 auto 1.5rem' }} />
+
+                      {/* Modal Header */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <div>
+                          <h3 style={{ margin: 0, fontFamily: 'var(--font-serif)', fontSize: '1.3rem', fontWeight: 600 }}>Select Typology</h3>
+                          <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                            Choose one or multiple collection stays
+                          </p>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                          <button
+                            onClick={() => setCollectionFilter([])}
+                            style={{ background: 'rgba(0,0,0,0.05)', border: 'none', borderRadius: '20px', padding: '0.4rem 0.8rem', cursor: 'pointer', color: 'var(--text-primary)', fontSize: '0.8rem', fontWeight: 600 }}
+                          >
+                            Reset All
+                          </button>
+                          <button
+                            onClick={() => setFilterSheetOpen(false)}
+                            style={{
+                              width: '30px',
+                              height: '30px',
+                              borderRadius: '50%',
+                              background: 'var(--border-color)',
+                              border: 'none',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer',
+                              color: 'var(--text-primary)',
+                              fontSize: '1rem',
+                              fontWeight: 'bold',
+                              transition: 'background 0.2s ease'
+                            }}
+                            title="Close"
+                          >
+                            ×
+                          </button>
+                        </div>
+                         {/* Advanced category grid in bottom sheet */}
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '2rem' }}>
+                        {/* All Collections Row (Full Width) */}
+                        <div
+                          onClick={() => setCollectionFilter([])}
+                          style={{
+                            position: 'relative',
+                            borderRadius: '18px',
+                            overflow: 'hidden',
+                            gridColumn: '1 / -1',
+                            height: '76px',
+                            border: collectionFilter.length === 0 ? '3px solid var(--accent)' : '2.5px solid var(--border-color)',
+                            boxShadow: collectionFilter.length === 0 ? '0 8px 24px rgba(224,122,95,0.22)' : 'none',
+                            cursor: 'pointer',
+                            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                            transform: collectionFilter.length === 0 ? 'scale(0.98)' : 'scale(1)'
+                          }}
+                        >
+                          <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'linear-gradient(135deg, #1c2331 0%, #0d1117 100%)'
+                          }} />
+                          
+                          <div style={{
+                            position: 'absolute',
+                            right: '-10px',
+                            bottom: '-10px',
+                            opacity: 0.12,
+                            color: '#fff'
+                          }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                          </div>
+
+                          <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '0 1.1rem',
+                            color: '#fff',
+                            zIndex: 2
+                          }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                              <div style={{
+                                width: '36px',
+                                height: '36px',
+                                borderRadius: '10px',
+                                background: 'rgba(255,255,255,0.12)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                              </div>
+                              <div style={{ textAlign: 'left' }}>
+                                <div style={{ fontWeight: 700, fontSize: '0.92rem' }}>All Collections</div>
+                                <div style={{ fontSize: '0.68rem', color: 'rgba(255, 255, 255, 0.7)' }}>Show entire catalogue</div>
+                              </div>
+                            </div>
+                            
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                              <span style={{ fontSize: '0.68rem', fontWeight: 700, background: 'rgba(255, 255, 255, 0.2)', padding: '0.15rem 0.4rem', borderRadius: '6px' }}>
+                                {listings.length} stays
+                              </span>
+                              <div style={{
+                                width: '20px',
+                                height: '20px',
+                                borderRadius: '50%',
+                                border: collectionFilter.length === 0 ? '2px solid #fff' : '2px solid rgba(255, 255, 255, 0.5)',
+                                background: collectionFilter.length === 0 ? 'var(--accent)' : 'transparent',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}>
+                                {collectionFilter.length === 0 && (
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" width="10" height="10"><polyline points="20 6 9 17 4 12"/></svg>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Individual Category Cards */}
+                        {['Cabin','Villa','Loft','Dome','Heritage'].map(cat => {
+                          const isActive = collectionFilter.includes(cat);
+                          const imageMap = { Cabin:'/images/cabin/cabin_1.jpg', Villa:'/images/villa/villa_1.jpg', Loft:'/images/loft/loft_1.jpg', Dome:'/images/dome/dome_1.jpg', Heritage:'/images/heritage/heritage_1.jpg' };
+                          const labelMap = { Cabin:'Cabins', Villa:'Villas', Loft:'Lofts', Dome:'Domes', Heritage:'Heritages' };
+                          const descMap = { Cabin:'Forest stays', Villa:'Luxury stays', Loft:'Urban spaces', Dome:'Geodesic stays', Heritage:'Heritage sites' };
+                          const count = listings.filter(l => l.category === cat).length;
+                          return (
+                            <div
+                              key={cat}
+                              onClick={() => setCollectionFilter(prev => prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat])}
+                              style={{
+                                position: 'relative',
+                                borderRadius: '18px',
+                                overflow: 'hidden',
+                                aspectRatio: '1.25',
+                                border: isActive ? '3px solid var(--accent)' : '2.5px solid var(--border-color)',
+                                boxShadow: isActive ? '0 8px 24px rgba(224,122,95,0.22)' : 'none',
+                                cursor: 'pointer',
+                                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                                transform: isActive ? 'scale(0.97)' : 'scale(1)'
+                              }}
+                            >
+                              <img src={imageMap[cat]} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease', transform: isActive ? 'scale(1.06)' : 'scale(1)' }} />
+                              
+                              {/* Dark gradient overlay */}
+                              <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                background: 'linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 65%, rgba(0, 0, 0, 0.3) 100%)'
+                              }} />
+                              
+                              {/* Top-Right Bubble Checkmark */}
+                              <div style={{
+                                position: 'absolute',
+                                top: '8px',
+                                right: '8px',
+                                width: '22px',
+                                height: '22px',
+                                borderRadius: '50%',
+                                border: isActive ? '2px solid #fff' : '2px solid rgba(255, 255, 255, 0.5)',
+                                background: isActive ? 'var(--accent)' : 'rgba(0, 0, 0, 0.2)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'all 0.2s ease',
+                                zIndex: 2
+                              }}>
+                                {isActive && (
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" width="10" height="10"><polyline points="20 6 9 17 4 12"/></svg>
+                                )}
+                              </div>
+
+                              {/* Bottom Text Content */}
+                              <div style={{
+                                position: 'absolute',
+                                bottom: '10px',
+                                left: '10px',
+                                right: '10px',
+                                color: '#fff',
+                                zIndex: 2,
+                                textAlign: 'left'
+                              }}>
+                                <div style={{ fontWeight: 700, fontSize: '0.88rem', letterSpacing: '0.01em', marginBottom: '0.1rem' }}>
+                                  {labelMap[cat]}
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <span style={{ fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                                    {descMap[cat]}
+                                  </span>
+                                  <span style={{ fontSize: '0.6rem', fontWeight: 700, background: 'rgba(255, 255, 255, 0.25)', padding: '0.1rem 0.3rem', borderRadius: '4px' }}>
+                                    {count}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>                     </div>
+
+                      {/* Apply button container inside modal */}
+                      <button
+                        onClick={() => setFilterSheetOpen(false)}
+                        className="btn btn-primary"
+                        style={{ width: '100%', borderRadius: '16px', padding: '0.9rem', fontSize: '0.95rem', fontWeight: 700, boxShadow: '0 8px 24px rgba(224,122,95,0.25)' }}
+                      >
+                        Apply Filters
+                      </button>
+                    </div>
+                  </>
+                )}
 
             {/* Render each category as a dedicated horizontal collection */}
             {(() => {
@@ -573,7 +803,7 @@ export default function App() {
                       paddingBottom: '0.75rem',
                       marginBottom: '1.25rem'
                     }}>
-                      <h3 style={{ fontSize: '1.6rem', fontWeight: '600', margin: 0 }}>
+                      <h3 style={{ fontSize: 'clamp(1.2rem, 4.5vw, 1.6rem)', fontWeight: '600', margin: 0 }}>
                         {catName}s
                       </h3>
                       <span 
@@ -582,7 +812,7 @@ export default function App() {
                           setActiveTab('explore');
                         }}
                         style={{
-                          fontSize: '0.88rem',
+                          fontSize: 'clamp(0.78rem, 3.2vw, 0.88rem)',
                           fontWeight: 600,
                           color: 'var(--accent)',
                           cursor: 'pointer',
@@ -601,7 +831,7 @@ export default function App() {
                       scrollSnapType: 'x mandatory'
                     }}>
                       {displayedStays.map(listing => (
-                        <div key={listing.id} style={{ minWidth: '310px', maxWidth: '310px', scrollSnapAlign: 'start' }}>
+                        <div key={listing.id} style={{ minWidth: 'clamp(270px, 85vw, 310px)', maxWidth: '310px', scrollSnapAlign: 'start' }}>
                           <ListingCard 
                             listing={listing}
                             isSaved={savedIds.includes(listing.id)}
@@ -635,6 +865,8 @@ export default function App() {
                 </>
               );
             })()}
+              </div> {/* Close collections-main-content */}
+            </div> {/* Close collections-layout-grid */}
           </div>
         )}
 
