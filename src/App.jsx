@@ -439,7 +439,7 @@ export default function App() {
 
         {/* Collections Tab Page */}
         {activeTab === 'collections' && (
-          <div className="container anim-fade" style={{  }}>
+          <div className="container  anim-fade" style={{ paddingTop: '1.5rem', paddingBottom: '2.5rem' }}>
             <div style={{ marginBottom: '2.5rem' }}>
               <h2 style={{ fontSize: 'clamp(1.6rem, 5.5vw, 2.5rem)', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
                 Design Collections
@@ -862,7 +862,7 @@ export default function App() {
 
         {/* Saved Tab */}
         {activeTab === 'saved' && (
-          <div className="container anim-fade" style={{ paddingTop: '2.5rem', paddingBottom: '5rem' }}>
+          <div className="container page-container anim-fade">
             <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>Saved Stays</h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '2rem' }}>
               Your collection of architectural masterpieces, scenic forest cabins, and beach escapes.

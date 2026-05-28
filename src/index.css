@@ -478,7 +478,7 @@ h6 {
 
 @media (max-width: 900px) {
   .container {
-    padding: 0 1rem !important;
+    padding: 1.5 1rem !important;
   }
 
   .category-bar {
