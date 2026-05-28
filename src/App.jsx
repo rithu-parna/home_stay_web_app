@@ -22,12 +22,19 @@ export default function App() {
 
   // Search & Filtering States
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategories, setActiveCategories] = useState([]);
+  const [visibleExploreLimit, setVisibleExploreLimit] = useState(10);
+  const [collectionFilter, setCollectionFilter] = useState([]);
+  const [visibleCollectionLimit, setVisibleCollectionLimit] = useState(10);
 
   // Core Data States (Listings, Saves, Reservations)
   const [listings, setListings] = useState(() => {
     const cached = localStorage.getItem('vela-listings');
-    return cached ? JSON.parse(cached) : listingsData;
+    const parsed = cached ? JSON.parse(cached) : null;
+    if (!parsed || parsed.length < listingsData.length) {
+      return listingsData;
+    }
+    return parsed;
   });
 
   const [savedIds, setSavedIds] = useState(() => {
@@ -55,6 +62,16 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('vela-theme', theme);
   }, [theme]);
+
+  // Reset pagination on Explore page filter changes
+  useEffect(() => {
+    setVisibleExploreLimit(10);
+  }, [activeCategories, searchQuery]);
+
+  // Reset pagination on Collections page filter changes
+  useEffect(() => {
+    setVisibleCollectionLimit(10);
+  }, [collectionFilter]);
 
   // Persist state updates
   useEffect(() => {
@@ -125,8 +142,8 @@ export default function App() {
 
   // Computed: filter listings for grid
   const filteredListings = listings.filter(l => {
-    // Category match
-    const matchesCategory = activeCategory === 'All' || l.category === activeCategory;
+    // Category match: if activeCategories is empty, match everything
+    const matchesCategory = activeCategories.length === 0 || activeCategories.includes(l.category);
     
     // Search match
     const lowerSearch = searchQuery.toLowerCase().trim();
@@ -160,10 +177,74 @@ export default function App() {
         {activeTab === 'explore' && (
           <div className="anim-fade">
             {/* Jumbotron and Category Selector */}
-            <Hero activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+            <Hero activeCategories={activeCategories} setActiveCategories={setActiveCategories} />
             
+            {/* Trending Escapes Section */}
+            <div className="container" style={{ paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                marginBottom: '1.5rem',
+                flexWrap: 'wrap',
+                gap: '1rem'
+              }}>
+                <div>
+                  <h2 style={{ fontSize: '1.8rem', fontWeight: '700', fontFamily: 'var(--font-serif)', margin: 0 }}>
+                    Trending Escapes
+                  </h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: '0.2rem 0 0 0' }}>
+                    Most popular design marvels highly rated by architectural explorers.
+                  </p>
+                </div>
+                <button 
+                  onClick={() => setActiveTab('collections')}
+                  className="btn btn-secondary"
+                  style={{
+                    borderRadius: '12px',
+                    padding: '0.6rem 1.2rem',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    color: 'var(--accent)',
+                    border: '1px solid var(--accent)',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  View All Collections →
+                </button>
+              </div>
+
+              {/* Horizontal Scroll Row for Trending Stays */}
+              <div className="custom-scrollbar" style={{
+                display: 'flex',
+                gap: '1.5rem',
+                overflowX: 'auto',
+                paddingBottom: '1rem',
+                scrollSnapType: 'x mandatory'
+              }}>
+                {listings.filter(l => l.isTrending).map(listing => (
+                  <div key={listing.id} style={{ minWidth: '310px', maxWidth: '310px', scrollSnapAlign: 'start' }}>
+                    <ListingCard 
+                      listing={listing}
+                      isSaved={savedIds.includes(listing.id)}
+                      onToggleSave={handleToggleSave}
+                      onClick={() => setActiveListing(listing)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Grid display of available stays */}
-            <div className="container" style={{ paddingBottom: '5rem' }}>
+            <div className="container" style={{ paddingBottom: '5rem', borderTop: '1px solid var(--border-color)', paddingTop: '2.5rem' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: '700', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem' }}>
+                {activeCategories.length === 0 
+                  ? 'All Architectural Escapes' 
+                  : `${activeCategories.join(' & ')} Collection`}
+              </h2>
+
               {filteredListings.length === 0 ? (
                 <div style={{
                   textAlign: 'center',
@@ -182,19 +263,179 @@ export default function App() {
                   </p>
                 </div>
               ) : (
-                <div className="listings-grid">
-                  {filteredListings.map(listing => (
-                    <ListingCard 
-                      key={listing.id}
-                      listing={listing}
-                      isSaved={savedIds.includes(listing.id)}
-                      onToggleSave={handleToggleSave}
-                      onClick={() => setActiveListing(listing)}
-                    />
-                  ))}
-                </div>
+                <>
+                  <div className="listings-grid">
+                    {filteredListings.slice(0, visibleExploreLimit).map(listing => (
+                      <ListingCard 
+                        key={listing.id}
+                        listing={listing}
+                        isSaved={savedIds.includes(listing.id)}
+                        onToggleSave={handleToggleSave}
+                        onClick={() => setActiveListing(listing)}
+                      />
+                    ))}
+                  </div>
+
+                  {filteredListings.length > visibleExploreLimit && (
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+                      <button 
+                        onClick={() => setVisibleExploreLimit(prev => prev + 10)}
+                        className="btn btn-primary"
+                        style={{ padding: '0.8rem 2.5rem', borderRadius: '15px', fontWeight: 600 }}
+                      >
+                        Load More Escapes ({filteredListings.length - visibleExploreLimit} remaining)
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
+          </div>
+        )}
+
+        {/* Collections Tab Page */}
+        {activeTab === 'collections' && (
+          <div className="container anim-fade" style={{ paddingTop: '2.5rem', paddingBottom: '5rem' }}>
+            <div style={{ marginBottom: '2.5rem' }}>
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>
+                Design Collections
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', maxWidth: '600px', marginBottom: '2rem' }}>
+                Explore boutique stays curated by architectural typology. Choose a category collection to view details.
+              </p>
+
+              {/* Collections Category Filter Bar */}
+              <div style={{ 
+                display: 'flex', 
+                gap: '0.8rem', 
+                overflowX: 'auto', 
+                paddingBottom: '1rem',
+                borderBottom: '1px solid var(--border-color)'
+              }} className="custom-scrollbar">
+                <button
+                  onClick={() => setCollectionFilter([])}
+                  className={`btn ${collectionFilter.length === 0 ? 'btn-primary' : 'btn-secondary'}`}
+                  style={{ borderRadius: '20px', padding: '0.5rem 1.2rem', fontSize: '0.85rem' }}
+                >
+                  All Collections
+                </button>
+                {['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].map(cat => {
+                  const isActive = collectionFilter.includes(cat);
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setCollectionFilter(prev => {
+                          if (prev.includes(cat)) {
+                            return prev.filter(c => c !== cat);
+                          } else {
+                            return [...prev, cat];
+                          }
+                        });
+                      }}
+                      className={`btn ${isActive ? 'btn-primary' : 'btn-secondary'}`}
+                      style={{ borderRadius: '20px', padding: '0.5rem 1.2rem', fontSize: '0.85rem' }}
+                    >
+                      {cat}s
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Render each category as a dedicated horizontal collection */}
+            {(() => {
+              let renderedCount = 0;
+              const categoriesToRender = ['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].filter(cat => 
+                collectionFilter.length === 0 || collectionFilter.includes(cat)
+              );
+              
+              // Count total matching stays to see if we need a "Load More" button
+              const totalMatchingStays = listings.filter(l => 
+                categoriesToRender.includes(l.category)
+              ).length;
+
+              const elements = categoriesToRender.map(catName => {
+                // If we have already reached the visible limit, skip rendering this collection group
+                if (renderedCount >= visibleCollectionLimit) return null;
+
+                const catStays = listings.filter(l => l.category === catName);
+                if (catStays.length === 0) return null;
+
+                // Slice stays for this category to not exceed the remaining visible limit
+                const remainingLimit = visibleCollectionLimit - renderedCount;
+                const displayedStays = catStays.slice(0, remainingLimit);
+                renderedCount += displayedStays.length;
+
+                return (
+                  <div key={catName} style={{ marginBottom: '3.5rem' }}>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'baseline',
+                      borderBottom: '1px solid var(--border-color)',
+                      paddingBottom: '0.75rem',
+                      marginBottom: '1.25rem'
+                    }}>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: '600', margin: 0 }}>
+                        {catName}s
+                      </h3>
+                      <span 
+                        onClick={() => {
+                          setActiveCategories([catName]);
+                          setActiveTab('explore');
+                        }}
+                        style={{
+                          fontSize: '0.88rem',
+                          fontWeight: 600,
+                          color: 'var(--accent)',
+                          cursor: 'pointer',
+                          transition: 'color 0.2s ease'
+                        }}
+                      >
+                        Browse All {catName}s →
+                      </span>
+                    </div>
+
+                    <div className="custom-scrollbar" style={{
+                      display: 'flex',
+                      gap: '1.5rem',
+                      overflowX: 'auto',
+                      paddingBottom: '1rem',
+                      scrollSnapType: 'x mandatory'
+                    }}>
+                      {displayedStays.map(listing => (
+                        <div key={listing.id} style={{ minWidth: '310px', maxWidth: '310px', scrollSnapAlign: 'start' }}>
+                          <ListingCard 
+                            listing={listing}
+                            isSaved={savedIds.includes(listing.id)}
+                            onToggleSave={handleToggleSave}
+                            onClick={() => setActiveListing(listing)}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              });
+
+              return (
+                <>
+                  {elements}
+                  {totalMatchingStays > visibleCollectionLimit && (
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+                      <button 
+                        onClick={() => setVisibleCollectionLimit(prev => prev + 10)}
+                        className="btn btn-primary"
+                        style={{ padding: '0.8rem 2.5rem', borderRadius: '15px', fontWeight: 600 }}
+                      >
+                        Load More Collections ({totalMatchingStays - visibleCollectionLimit} remaining)
+                      </button>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </div>
         )}
 

@@ -10,7 +10,7 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
     host, reviews, lat, lng 
   } = listing;
 
-  const [activeImage, setActiveImage] = useState(images[0]);
+  const [activeImage, setActiveImage] = useState(images && images.length > 0 ? images[0] : '/images/placeholder.png');
   const [mediaMode, setMediaMode] = useState('photos');
 
   return (

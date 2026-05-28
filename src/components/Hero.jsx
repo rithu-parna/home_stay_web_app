@@ -27,7 +27,12 @@ const categoryToVideoId = {
   Heritage: 'house_tour'
 };
 
-export default function Hero({ activeCategory, setActiveCategory }) {
+export default function Hero({ activeCategories = [], setActiveCategories }) {
+  // If activeCategories is empty, use 'All' video. Otherwise, map the last selected category to its video.
+  const activeVideoId = activeCategories.length === 0 
+    ? 'house_tour' 
+    : (categoryToVideoId[activeCategories[activeCategories.length - 1]] || 'house_tour');
+
   return (
     <div style={{
       position: 'relative',
@@ -44,7 +49,7 @@ export default function Hero({ activeCategory, setActiveCategory }) {
     }}>
       {/* Background Videos (Pre-loaded with smooth cross-fade) */}
       {uniqueVideos.map((video) => {
-        const isActive = categoryToVideoId[activeCategory] === video.id;
+        const isActive = activeVideoId === video.id;
         return (
           <video
             key={video.id}
@@ -143,12 +148,26 @@ export default function Hero({ activeCategory, setActiveCategory }) {
         }}>
           {categories.map((cat, i) => {
             const Icon = cat.icon;
-            const isActive = activeCategory === cat.id;
+            const isActive = cat.id === 'All' 
+              ? activeCategories.length === 0 
+              : activeCategories.includes(cat.id);
             return (
               <div
                 key={cat.id}
                 id={`category-tab-${cat.id.toLowerCase()}`}
-                onClick={() => setActiveCategory(cat.id)}
+                onClick={() => {
+                  if (cat.id === 'All') {
+                    setActiveCategories([]);
+                  } else {
+                    setActiveCategories(prev => {
+                      if (prev.includes(cat.id)) {
+                        return prev.filter(c => c !== cat.id);
+                      } else {
+                        return [...prev, cat.id];
+                      }
+                    });
+                  }
+                }}
                 className={`category-tab ${isActive ? 'active' : ''}`}
                 style={{
                   minWidth: '90px',

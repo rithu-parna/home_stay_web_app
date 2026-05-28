@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 import React, { useState } from 'react';
-import { Sun, Moon, Search, Heart, Compass, LayoutDashboard, User, Menu, X } from 'lucide-react';
+import { Sun, Moon, Search, Heart, Compass, LayoutDashboard, User, Menu, X, Layers } from 'lucide-react';
 
 export default function Navbar({ 
   theme, 
@@ -125,6 +125,16 @@ export default function Navbar({
             <Compass size={16} />
             Explore
           </button>
+
+          <button 
+            id="nav-tab-collections"
+            onClick={() => setActiveTab('collections')}
+            className={`btn ${activeTab === 'collections' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ padding: '0.55rem 1.2rem', fontSize: '0.88rem', borderRadius: '20px' }}
+          >
+            <Layers size={16} />
+            Collections
+          </button>
           
           <button 
             id="nav-tab-saved"
@@ -236,6 +246,16 @@ export default function Navbar({
           >
             <Compass size={18} />
             Explore Destinations
+          </button>
+
+          <button 
+            id="mobile-nav-collections"
+            onClick={() => { setActiveTab('collections'); setMobileMenuOpen(false); }}
+            className={`btn ${activeTab === 'collections' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ width: '100%', justifyContent: 'flex-start' }}
+          >
+            <Layers size={18} />
+            Explore Collections
           </button>
 
           <button 
