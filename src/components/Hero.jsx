@@ -12,7 +12,7 @@ const categories = [
 ];
 
 const uniqueVideos = [
-  { id: 'house_tour', url: '/videos/house_tour.mp4' },
+  { id: 'house_tour', url: '/videos/glide-over-coastal-beach.mp4' },
   { id: 'livingspace', url: '/videos/livingspace.mp4' },
   { id: 'bathroom', url: '/videos/bathroom.mp4' },
   { id: 'kitchen', url: '/videos/kitchen.mp4' },
@@ -30,8 +30,8 @@ const categoryToVideoId = {
 
 export default function Hero({ activeCategories = [], setActiveCategories }) {
   // If activeCategories is empty, use 'All' video. Otherwise, map the last selected category to its video.
-  const activeVideoId = activeCategories.length === 0 
-    ? 'house_tour' 
+  const activeVideoId = activeCategories.length === 0
+    ? 'house_tour'
     : (categoryToVideoId[activeCategories[activeCategories.length - 1]] || 'house_tour');
 
   return (
@@ -146,8 +146,8 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
         }}>
           {categories.map((cat, i) => {
             const Icon = cat.icon;
-            const isActive = cat.id === 'All' 
-              ? activeCategories.length === 0 
+            const isActive = cat.id === 'All'
+              ? activeCategories.length === 0
               : activeCategories.includes(cat.id);
             return (
               <div
