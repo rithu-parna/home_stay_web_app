@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Star, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ListingCard({ listing, isSaved, onToggleSave, onClick }) {
-  const { id, title, location, price, rating, reviewsCount, category, images, bedrooms, bathrooms } = listing;
+  const { id, title, location, price, rating, reviewsCount, category, images, bedrooms, bathrooms, video } = listing;
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -52,8 +52,32 @@ export default function ListingCard({ listing, isSaved, onToggleSave, onClick })
           alt={title} 
           className="card-img" 
           loading="lazy"
-          style={{ transition: 'opacity 0.2s ease-in-out' }}
+          style={{ 
+            transition: 'opacity 0.3s ease-in-out',
+            opacity: isHovered && video ? 0 : 1
+          }}
         />
+
+        {video && isHovered && (
+          <video
+            src={video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 2,
+              pointerEvents: 'none',
+              animation: 'fadeIn 0.4s ease-in-out forwards'
+            }}
+          />
+        )}
 
         {/* Prev / Next Buttons (visible on hover) */}
         {images && images.length > 1 && (
@@ -157,7 +181,8 @@ export default function ListingCard({ listing, isSaved, onToggleSave, onClick })
           gap: '0.3rem',
           color: '#fff',
           fontSize: '0.78rem',
-          fontWeight: 600
+          fontWeight: 600,
+          zIndex: 10
         }}>
           <Star size={12} fill="#ffb020" color="#ffb020" />
           <span>{rating.toFixed(2)}</span>
@@ -184,7 +209,8 @@ export default function ListingCard({ listing, isSaved, onToggleSave, onClick })
             color: '#fff',
             cursor: 'pointer',
             transition: 'all 0.2s ease',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
+            boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+            zIndex: 10
           }}
           title={isSaved ? "Remove from Saved" : "Save Stay"}
         >
@@ -207,7 +233,8 @@ export default function ListingCard({ listing, isSaved, onToggleSave, onClick })
           padding: '0.2rem 0.5rem',
           fontSize: '0.72rem',
           fontWeight: 600,
-          letterSpacing: '0.5px'
+          letterSpacing: '0.5px',
+          zIndex: 10
         }}>
           {category}
         </span>
