@@ -10,7 +10,9 @@ export default function Navbar({
   searchQuery, 
   setSearchQuery, 
   savedCount,
-  onOpenProfile
+  onOpenProfile,
+  isLoggedIn,
+  user
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -197,15 +199,27 @@ export default function Navbar({
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {/* Profile Button */}
-          <button 
-            id="user-profile-btn"
-            onClick={onOpenProfile}
-            className="btn-icon"
-            style={{ background: 'var(--accent-gradient)', color: '#fff', border: 'none' }}
-          >
-            <User size={18} />
-          </button>
+           {/* Profile Button / Log In */}
+          {isLoggedIn ? (
+            <button 
+              id="user-profile-btn"
+              onClick={onOpenProfile}
+              className="btn-icon"
+              style={{ background: 'var(--accent-gradient)', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '0.85rem' }}
+              title={`${user?.name}'s Profile`}
+            >
+              {user?.name ? user.name.slice(0, 2).toUpperCase() : <User size={18} />}
+            </button>
+          ) : (
+            <button 
+              id="user-login-btn"
+              onClick={onOpenProfile}
+              className="btn btn-primary"
+              style={{ padding: '0.5rem 1.2rem', fontSize: '0.85rem', borderRadius: '20px' }}
+            >
+              Log In
+            </button>
+          )}
         </div>
 
         {/* Mobile Actions (Menu Toggle) */}
@@ -298,7 +312,7 @@ export default function Navbar({
             style={{ width: '100%', justifyContent: 'flex-start' }}
           >
             <User size={18} />
-            My Profile
+            {isLoggedIn ? `${user?.name || 'My'} Profile` : 'Log In / Sign Up'}
           </button>
         </div>
       )}

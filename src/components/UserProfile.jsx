@@ -10,7 +10,8 @@ export default function UserProfile({
   savedStays, 
   onViewListing, 
   activeSubTab = 'bookings', 
-  setActiveSubTab 
+  setActiveSubTab,
+  onLogout
 }) {
   const [name, setName] = useState(user.name || 'Alex Mercer');
   const [email, setEmail] = useState(user.email || 'alex.mercer@velastays.com');
@@ -107,15 +108,30 @@ export default function UserProfile({
           </div>
         </div>
 
-        {/* Action Button */}
-        <div>
+        {/* Action Buttons */}
+        <div style={{ display: 'flex', gap: '0.8rem', flexDirection: 'column', minWidth: '150px' }}>
           <button 
             id="edit-profile-btn"
             onClick={() => setIsEditing(!isEditing)}
             className="btn btn-secondary"
-            style={{ borderRadius: '12px', fontSize: '0.88rem' }}
+            style={{ borderRadius: '12px', fontSize: '0.88rem', width: '100%' }}
           >
             {isEditing ? 'Cancel Editing' : 'Edit Profile'}
+          </button>
+          <button 
+            id="logout-btn"
+            onClick={onLogout}
+            className="btn btn-secondary"
+            style={{ 
+              borderRadius: '12px', 
+              fontSize: '0.88rem', 
+              borderColor: 'rgba(239, 68, 68, 0.3)',
+              color: '#ef4444',
+              background: 'rgba(239, 68, 68, 0.05)',
+              width: '100%'
+            }}
+          >
+            Log Out
           </button>
         </div>
       </div>

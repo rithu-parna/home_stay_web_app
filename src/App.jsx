@@ -8,6 +8,7 @@ import BookingSuccessModal from './components/BookingSuccessModal';
 import UserProfile from './components/UserProfile';
 import HostDashboard from './components/HostDashboard';
 import LocalConcierge from './components/LocalConcierge';
+import AuthModal from './components/AuthModal';
 import { listingsData } from './data/listings';
 
 export default function App() {
@@ -19,6 +20,14 @@ export default function App() {
   // Navigation Tabs State
   const [activeTab, setActiveTab] = useState('explore');
   const [activeSubTab, setActiveSubTab] = useState('bookings');
+
+  // Authentication States
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('vela-is-logged-in') === 'true';
+  });
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authRedirectAction, setAuthRedirectAction] = useState(null); // 'profile', 'saved', 'book', 'host'
+  const [pendingBooking, setPendingBooking] = useState(null);
 
   // Search & Filtering States
   const [searchQuery, setSearchQuery] = useState('');
@@ -57,11 +66,32 @@ export default function App() {
   const [activeListing, setActiveListing] = useState(null);
   const [activeReservation, setActiveReservation] = useState(null);
 
+  // Computed: filter listings for grid
+  const filteredListings = listings.filter(l => {
+    // Category match: if activeCategories is empty, match everything
+    const matchesCategory = activeCategories.length === 0 || activeCategories.includes(l.category);
+    
+    // Search match
+    const lowerSearch = searchQuery.toLowerCase().trim();
+    const matchesSearch = !lowerSearch || 
+      l.location.toLowerCase().includes(lowerSearch) || 
+      l.title.toLowerCase().includes(lowerSearch);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  // Computed: saved stays listings
+  const savedStays = listings.filter(l => savedIds.includes(l.id));
+
   // Sync theme changes with DOM
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('vela-theme', theme);
   }, [theme]);
+
+  // Infinite scroll states
+  const [isExploreLoadingMore, setIsExploreLoadingMore] = useState(false);
+  const [isCollectionsLoadingMore, setIsCollectionsLoadingMore] = useState(false);
 
   // Reset pagination on Explore page filter changes
   useEffect(() => {
@@ -72,6 +102,47 @@ export default function App() {
   useEffect(() => {
     setVisibleCollectionLimit(10);
   }, [collectionFilter]);
+
+  // Infinite Scroll Listener
+  useEffect(() => {
+    const handleScroll = () => {
+      // Explore page infinite scroll
+      if (activeTab === 'explore' && filteredListings.length > visibleExploreLimit && !isExploreLoadingMore) {
+        const threshold = 150; // px from bottom
+        const isNearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - threshold;
+        if (isNearBottom) {
+          setIsExploreLoadingMore(true);
+          setTimeout(() => {
+            setVisibleExploreLimit(prev => prev + 10);
+            setIsExploreLoadingMore(false);
+          }, 1000); // 1s simulated fetch
+        }
+      }
+
+      // Collections page infinite scroll
+      if (activeTab === 'collections' && !isCollectionsLoadingMore) {
+        const categoriesToRender = ['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].filter(cat => 
+          collectionFilter.length === 0 || collectionFilter.includes(cat)
+        );
+        const totalMatchingStays = listings.filter(l => categoriesToRender.includes(l.category)).length;
+
+        if (totalMatchingStays > visibleCollectionLimit) {
+          const threshold = 150;
+          const isNearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - threshold;
+          if (isNearBottom) {
+            setIsCollectionsLoadingMore(true);
+            setTimeout(() => {
+              setVisibleCollectionLimit(prev => prev + 10);
+              setIsCollectionsLoadingMore(false);
+            }, 1000); // 1s simulated fetch
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeTab, filteredListings.length, visibleExploreLimit, isExploreLoadingMore, listings, visibleCollectionLimit, collectionFilter, isCollectionsLoadingMore]);
 
   // Persist state updates
   useEffect(() => {
@@ -95,6 +166,11 @@ export default function App() {
   };
 
   const handleToggleSave = (id) => {
+    if (!isLoggedIn) {
+      setAuthRedirectAction('saved');
+      setShowAuthModal(true);
+      return;
+    }
     setSavedIds(prev => 
       prev.includes(id) ? prev.filter(savedId => savedId !== id) : [...prev, id]
     );
@@ -114,8 +190,64 @@ export default function App() {
     }
   };
 
-  // Book listing process
+  // Guarded Tab Switcher
+  const changeTab = (tab) => {
+    if ((tab === 'saved' || tab === 'host' || tab === 'profile') && !isLoggedIn) {
+      setAuthRedirectAction(tab);
+      setShowAuthModal(true);
+      return;
+    }
+    setActiveTab(tab);
+  };
+
+  // Login Success Callback
+  const handleLoginSuccess = (userData) => {
+    setIsLoggedIn(true);
+    setUser(userData);
+    localStorage.setItem('vela-is-logged-in', 'true');
+    localStorage.setItem('vela-user', JSON.stringify(userData));
+    setShowAuthModal(false);
+
+    if (authRedirectAction === 'profile') {
+      setActiveTab('profile');
+      setActiveSubTab('bookings');
+    } else if (authRedirectAction === 'saved') {
+      setActiveTab('saved');
+    } else if (authRedirectAction === 'host') {
+      setActiveTab('host');
+    } else if (authRedirectAction === 'book' && pendingBooking) {
+      // Execute the pending reservation
+      const newReservation = {
+        id: `res_${Date.now()}`,
+        listing: activeListing,
+        ...pendingBooking
+      };
+      setReservations(prev => [newReservation, ...prev]);
+      setActiveReservation(newReservation);
+      setActiveListing(null);
+      setPendingBooking(null);
+    }
+    setAuthRedirectAction(null);
+  };
+
+  // Logout Callback
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser({ name: 'Alex Mercer', email: 'alex.mercer@velastays.com' });
+    localStorage.removeItem('vela-is-logged-in');
+    localStorage.removeItem('vela-user');
+    setActiveTab('explore'); // Reset to public explore page
+  };
+
+  // Book listing process (guarded by auth)
   const handleReserve = (bookingSummary) => {
+    if (!isLoggedIn) {
+      setPendingBooking(bookingSummary);
+      setAuthRedirectAction('book');
+      setShowAuthModal(true);
+      return;
+    }
+
     const newReservation = {
       id: `res_${Date.now()}`,
       listing: activeListing,
@@ -140,22 +272,7 @@ export default function App() {
     setUser(updatedInfo);
   };
 
-  // Computed: filter listings for grid
-  const filteredListings = listings.filter(l => {
-    // Category match: if activeCategories is empty, match everything
-    const matchesCategory = activeCategories.length === 0 || activeCategories.includes(l.category);
-    
-    // Search match
-    const lowerSearch = searchQuery.toLowerCase().trim();
-    const matchesSearch = !lowerSearch || 
-      l.location.toLowerCase().includes(lowerSearch) || 
-      l.title.toLowerCase().includes(lowerSearch);
 
-    return matchesCategory && matchesSearch;
-  });
-
-  // Computed: saved stays listings
-  const savedStays = listings.filter(l => savedIds.includes(l.id));
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -165,11 +282,13 @@ export default function App() {
         theme={theme}
         toggleTheme={toggleTheme}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={changeTab}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         savedCount={savedIds.length}
-        onOpenProfile={() => { setActiveTab('profile'); setActiveSubTab('bookings'); }}
+        onOpenProfile={() => { changeTab('profile'); setActiveSubTab('bookings'); }}
+        isLoggedIn={isLoggedIn}
+        user={user}
       />
 
       {/* Main Page Panel Coordinator */}
@@ -274,17 +393,34 @@ export default function App() {
                         onClick={() => setActiveListing(listing)}
                       />
                     ))}
+                    {isExploreLoadingMore && (
+                      <>
+                        <div className="glass-panel" style={{ height: '360px', opacity: 0.5, borderRadius: '16px', overflow: 'hidden', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                          <div style={{ height: '180px', background: 'rgba(255,255,255,0.04)', borderRadius: '12px', animation: 'auth-pulse 1.5s infinite ease-in-out' }} />
+                          <div style={{ height: '16px', width: '70%', background: 'rgba(255,255,255,0.04)', borderRadius: '4px', animation: 'auth-pulse 1.5s infinite ease-in-out' }} />
+                          <div style={{ height: '12px', width: '40%', background: 'rgba(255,255,255,0.04)', borderRadius: '4px', animation: 'auth-pulse 1.5s infinite ease-in-out' }} />
+                        </div>
+                        <div className="glass-panel" style={{ height: '360px', opacity: 0.5, borderRadius: '16px', overflow: 'hidden', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                          <div style={{ height: '180px', background: 'rgba(255,255,255,0.04)', borderRadius: '12px', animation: 'auth-pulse 1.5s infinite ease-in-out' }} />
+                          <div style={{ height: '16px', width: '70%', background: 'rgba(255,255,255,0.04)', borderRadius: '4px', animation: 'auth-pulse 1.5s infinite ease-in-out' }} />
+                          <div style={{ height: '12px', width: '40%', background: 'rgba(255,255,255,0.04)', borderRadius: '4px', animation: 'auth-pulse 1.5s infinite ease-in-out' }} />
+                        </div>
+                      </>
+                    )}
                   </div>
 
-                  {filteredListings.length > visibleExploreLimit && (
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
-                      <button 
-                        onClick={() => setVisibleExploreLimit(prev => prev + 10)}
-                        className="btn btn-primary"
-                        style={{ padding: '0.8rem 2.5rem', borderRadius: '15px', fontWeight: 600 }}
-                      >
-                        Load More Escapes ({filteredListings.length - visibleExploreLimit} remaining)
-                      </button>
+                  {isExploreLoadingMore && (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.6rem', marginTop: '2.5rem' }}>
+                      <div style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        background: 'var(--accent)',
+                        animation: 'auth-pulse 1s infinite ease-in-out'
+                      }} />
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                        Loading more bespoke architectural stays...
+                      </span>
                     </div>
                   )}
                 </>
@@ -422,15 +558,18 @@ export default function App() {
               return (
                 <>
                   {elements}
-                  {totalMatchingStays > visibleCollectionLimit && (
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-                      <button 
-                        onClick={() => setVisibleCollectionLimit(prev => prev + 10)}
-                        className="btn btn-primary"
-                        style={{ padding: '0.8rem 2.5rem', borderRadius: '15px', fontWeight: 600 }}
-                      >
-                        Load More Collections ({totalMatchingStays - visibleCollectionLimit} remaining)
-                      </button>
+                  {isCollectionsLoadingMore && (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.6rem', padding: '2rem 0' }}>
+                      <div style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        background: 'var(--accent)',
+                        animation: 'auth-pulse 1s infinite ease-in-out'
+                      }} />
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                        Loading more collections...
+                      </span>
                     </div>
                   )}
                 </>
@@ -506,6 +645,7 @@ export default function App() {
             onViewListing={(lst) => setActiveListing(lst)}
             activeSubTab={activeSubTab}
             setActiveSubTab={setActiveSubTab}
+            onLogout={handleLogout}
           />
         )}
       </main>
@@ -564,6 +704,24 @@ export default function App() {
 
       {/* Floating AI Concierge Agent */}
       <LocalConcierge />
+
+      {/* Advanced Auth Modal */}
+      <AuthModal 
+        isOpen={showAuthModal}
+        onClose={() => {
+          setShowAuthModal(false);
+          setPendingBooking(null);
+          setAuthRedirectAction(null);
+        }}
+        onLoginSuccess={handleLoginSuccess}
+      />
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes auth-pulse {
+          0%, 100% { opacity: 0.3; transform: scale(0.95); }
+          50% { opacity: 0.8; transform: scale(1.05); }
+        }
+      `}} />
     </div>
   );
 }
