@@ -12,8 +12,8 @@ const rawListingsData = [
     category: "Cabin",
     images: [
       "/images/cabin.png",
-      "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80"
+      "/images/cabin/cabin_1.jpg",
+      "/images/cabin/cabin_2.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "Nestled deep in the pine forests of Chamonix, The Obsidian is an architectural marvel. This A-frame cabin combines dark minimalist exterior lines with an incredibly warm, light-wood interior. Enjoy floor-to-ceiling glass windows offering panoramic views of Mont Blanc, a wood-fired outdoor hot tub, and a private stone fireplace that warms the entire open loft layout. It's the ultimate alpine retreat for design lovers and winter adventurers.",
@@ -47,8 +47,8 @@ const rawListingsData = [
     category: "Villa",
     images: [
       "/images/villa.png",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+      "/images/villa/villa_1.jpg",
+      "/images/villa/villa_2.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
     description: "Perched majestically on the volcanic cliffs of Oia, Aegean Horizon Villa redefined luxury cave-living. Carved partially into the rockface, the villa offers a seamless indoor-outdoor layout, leading directly to a private heated infinity pool that blends into the endless blue of the Aegean. The interior features curved white concrete walls, raw wood highlights, and minimalist custom Mediterranean furnishings.",
@@ -81,8 +81,8 @@ const rawListingsData = [
     category: "Loft",
     images: [
       "/images/loft.png",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"
+      "/images/loft/loft_1.jpg",
+      "/images/loft/loft_2.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
     description: "A breathtaking conversion of a 19th-century metal foundry. This massive 2,200 sq ft loft boasts 18-foot exposed timber ceilings, restored red brick walls, and giant arched windows overlooking the East River and Manhattan skyline. Furnished with rare mid-century modern collector items, a vinyl record player with an extensive collection, and a jungle of hanging tropical plants, this space is an urban sanctuary.",
@@ -115,8 +115,8 @@ const rawListingsData = [
     category: "Dome",
     images: [
       "/images/dome.png",
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800&q=80"
+      "/images/dome/dome_1.jpg",
+      "/images/dome/dome_2.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "Suspended above a rushing river valley in the tropical heart of Ubud, the Bamboo Forest Dome is a masterpiece of sustainable organic architecture. Fully constructed out of black and blond local bamboo, this eco-dome has no glass windows, allowing the cool jungle breeze and the soothing sounds of the river to fill the room. It features a private swimming pool, netting hammock overlooking the canopy, and an outdoor rain shower.",
@@ -148,9 +148,9 @@ const rawListingsData = [
     reviewsCount: 64,
     category: "Heritage",
     images: [
-      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=800&q=80"
+      "/images/heritage/heritage_1.jpg",
+      "/images/heritage.png",
+      "/images/heritage/heritage_3.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/house_tour.mp4",
     description: "An authentic 16th-century Tuscan farmhouse painstakingly restored by local artisans. Situated amidst rolling hills, vineyards, and olive groves, the estate features hand-carved stone walls, exposed chestnut ceiling beams, and terracotta floors. The property offers an outdoor pizza oven, a solar-heated stone pool, and a private wine cellar stocked with local Chianti Classico.",
@@ -182,9 +182,9 @@ const rawListingsData = [
     reviewsCount: 95,
     category: "Cabin",
     images: [
-      "https://images.unsplash.com/photo-1517059224940-d4af9eec41b7?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=crop&w=800&q=80"
+      "/images/cabin/cabin_3.jpg",
+      "/images/cabin/cabin_4.jpg",
+      "/images/cabin/cabin_5.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/bathroom.mp4",
     description: "Positioned directly under the auroral oval, this cutting-edge cabin features a custom double-glazed glass roof that stretches over the master bedroom. Sleep under the northern lights or watch the midnight sun from the comfort of a luxury king bed. The cabin is heated using state-of-the-art geothermal pumps and boasts an Scandinavian redwood sauna overlooking the Norwegian fjords.",
@@ -217,8 +217,8 @@ const rawListingsData = [
     reviewsCount: 154,
     category: "Villa",
     images: [
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
+      "/images/villa/villa_2.jpg",
+      "/images/villa/villa_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
     description: "A gorgeous sanctuary in Bali. Built entirely of concrete, glass, and teak wood, Mirage Villa features an open living plan looking directly onto a private lap pool flanked by tropical palms. The master bedroom is encased in floor-to-ceiling glass.",
@@ -249,8 +249,8 @@ const rawListingsData = [
     reviewsCount: 112,
     category: "Loft",
     images: [
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
+      "/images/loft/loft_2.jpg",
+      "/images/loft/loft_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
     description: "Located in the heart of SoHo, this converted artist loft features classic cast-iron columns, massive factory windows, and a curated gallery of local contemporary art.",
@@ -282,8 +282,8 @@ const rawListingsData = [
     reviewsCount: 78,
     category: "Dome",
     images: [
-      "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80"
+      "/images/dome/dome_2.jpg",
+      "/images/dome/dome_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "An eco-friendly geodesic dome in the wilderness of Patagonia. Wake up to views of the snow-capped mountain peaks through the transparent dome panel.",
@@ -314,8 +314,8 @@ const rawListingsData = [
     reviewsCount: 82,
     category: "Heritage",
     images: [
-      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=800&q=80"
+      "/images/heritage/heritage_1.jpg",
+      "/images/heritage/heritage_3.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/house_tour.mp4",
     description: "A beautifully restored 120-year-old traditional townhouse (Machiya) located in the historic Gion district of Kyoto. Features tatami mat flooring, paper shoji screens, and a tranquil inner zen garden.",
@@ -346,8 +346,8 @@ const rawListingsData = [
     reviewsCount: 96,
     category: "Cabin",
     images: [
-      "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=800&q=80"
+      "/images/cabin/cabin_2.jpg",
+      "/images/cabin/cabin_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "Tucked away in the redwood forest bordering Lake Tahoe, this A-Frame cabin has been fully updated with designer mid-century modern furnishings, a custom fire pit, and direct private beach access.",
@@ -380,8 +380,8 @@ const rawListingsData = [
     category: "Dome",
     images: [
       "/images/dome.png",
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800&q=80"
+      "/images/dome/dome_1.jpg",
+      "/images/dome/dome_2.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "Located in the driest desert in the world, this dome features a fully transparent ceiling dome for stargazing at the Milky Way. Comes with a high-end telescope.",
@@ -413,7 +413,7 @@ const rawListingsData = [
     category: "Cabin",
     images: [
       "/images/cabin.png",
-      "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=800&q=80"
+      "/images/cabin/cabin_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "A cozy modern A-Frame cabin tucked in the towering pines of the Cascade Range. Features a private wood fire hot tub and skylights above the loft.",
@@ -445,7 +445,7 @@ const rawListingsData = [
     category: "Villa",
     images: [
       "/images/villa.png",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
+      "/images/villa/villa_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
     description: "An exceptional luxury villa perched high above the cliffs of Positano. Features a private sun deck, heated plunge pool, and sweeping Mediterranean views.",
@@ -477,7 +477,7 @@ const rawListingsData = [
     category: "Loft",
     images: [
       "/images/loft.png",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
+      "/images/loft/loft_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
     description: "A spacious industrial loft located in Berlin's creative district. Filled with custom neon installations, vintage synthesizers, and modern artwork.",
@@ -509,7 +509,7 @@ const rawListingsData = [
     category: "Dome",
     images: [
       "/images/dome.png",
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80"
+      "/images/dome/dome_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "An eco-friendly dome utilizing natural geothermal heating. Located in a scenic lava field offering perfect Northern Lights stargazing views.",
@@ -540,8 +540,8 @@ const rawListingsData = [
     reviewsCount: 76,
     category: "Heritage",
     images: [
-      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?auto=format&fit=crop&w=800&q=80"
+      "/images/heritage/heritage_1.jpg",
+      "/images/heritage.png"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/house_tour.mp4",
     description: "A traditional Andalusian country home lovingly restored with terracotta tiling, whitewashed stone walls, and an arched central courtyard.",
@@ -573,7 +573,7 @@ const rawListingsData = [
     category: "Cabin",
     images: [
       "/images/cabin.png",
-      "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80"
+      "/images/cabin/cabin_2.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/livingspace.mp4",
     description: "A premium alpine cabin in Zermatt offering direct views of the iconic Matterhorn peak. Includes a Scandinavian redwood sauna.",
@@ -605,7 +605,7 @@ const rawListingsData = [
     category: "Villa",
     images: [
       "/images/villa.png",
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+      "/images/villa/villa_2.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach.mp4",
     description: "A pristine whitewashed cave villa with a heated outdoor plunge pool overlooking the volcanic caldera of Santorini.",
@@ -637,7 +637,7 @@ const rawListingsData = [
     category: "Loft",
     images: [
       "/images/loft.png",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
+      "/images/loft/loft_1.jpg"
     ],
     video: "https://res.cloudinary.com/demo/video/upload/docs/kitchen.mp4",
     description: "A beautifully restored Victorian-era warehouse loft in East London, featuring exposed brick walls, steel frame windows, and vintage industrial antiques.",
@@ -663,29 +663,29 @@ const rawListingsData = [
 
 const extraCategoryImages = {
   Cabin: [
-    "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80"
+    "/images/cabin/cabin_5.jpg",
+    "/images/cabin/cabin_6.jpg",
+    "/images/cabin/cabin_7.jpg"
   ],
   Villa: [
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=80"
+    "/images/villa/villa_1.jpg",
+    "/images/villa/villa_2.jpg",
+    "/images/villa/villa_3.jpg"
   ],
   Loft: [
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&w=800&q=80"
+    "/images/loft/loft_1.jpg",
+    "/images/loft/loft_2.jpg",
+    "/images/loft/loft_3.jpg"
   ],
   Dome: [
-    "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1628744500400-75472e92bc06?auto=format&fit=crop&w=800&q=80"
+    "/images/dome/dome_1.jpg",
+    "/images/dome/dome_2.jpg",
+    "/images/dome.png"
   ],
   Heritage: [
-    "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80"
+    "/images/heritage/heritage_1.jpg",
+    "/images/heritage/heritage_3.jpg",
+    "/images/heritage/heritage_4.jpg"
   ]
 };
 
