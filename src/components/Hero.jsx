@@ -157,13 +157,10 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
                   if (cat.id === 'All') {
                     setActiveCategories([]);
                   } else {
-                    setActiveCategories(prev => {
-                      if (prev.includes(cat.id)) {
-                        return prev.filter(c => c !== cat.id);
-                      } else {
-                        return [...prev, cat.id];
-                      }
-                    });
+                    // Single-select: toggle off if already active, otherwise select only this one
+                    setActiveCategories(prev =>
+                      prev.length === 1 && prev[0] === cat.id ? [] : [cat.id]
+                    );
                   }
                 }}
                 className={`category-tab ${isActive ? 'active' : ''}`}
