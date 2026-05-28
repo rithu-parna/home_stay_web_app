@@ -155,7 +155,7 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
                 id={`category-tab-${cat.id.toLowerCase()}`}
                 onClick={() => {
                   if (cat.id === 'All') {
-                    setActiveCategories([]);
+                     setActiveCategories([]);
                   } else {
                     // Single-select: toggle off if already active, otherwise select only this one
                     setActiveCategories(prev =>

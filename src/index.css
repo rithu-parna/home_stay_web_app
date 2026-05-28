@@ -47,9 +47,10 @@
   --toast-text: #ffffff;
 
   /* Hero Video Settings for Light Theme */
-  --hero-video-opacity: 0.3;
-  --hero-video-filter: brightness(1.2) contrast(0.9) saturate(0.85);
-  --hero-overlay-bg: rgba(250, 248, 245, 0.4);
+   /* Hero Video Settings for Light Theme */
+  --hero-video-opacity: 0.4;
+  --hero-video-filter: brightness(1.0) contrast(1.0) saturate(1.0);
+  --hero-overlay-bg: transparent;
 }
 
 /* Dark Theme Variables (Default) */
