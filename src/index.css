@@ -935,3 +935,61 @@ h6 {
   min-width: 0;
   overflow: hidden;
 }
+
+/* ─── FLOATING CONCIERGE CHAT WIDGET ─── */
+.concierge-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1010; /* Above bottom nav */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.concierge-toggle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(224, 122, 95, 0.4);
+  transition: transform var(--transition-fast) ease;
+}
+
+.concierge-toggle-btn:hover {
+  transform: scale(1.05);
+}
+
+.concierge-toggle-icon {
+  width: 26px;
+  height: 26px;
+}
+
+@media (max-width: 768px) {
+  .concierge-container {
+    bottom: 80px; /* Above the mobile bottom nav bar */
+    right: 16px;
+  }
+
+  .concierge-toggle-btn {
+    width: 48px;  /* Reduced button size */
+    height: 48px;
+  }
+
+  .concierge-toggle-icon {
+    width: 20px;  /* Reduced icon size */
+    height: 20px;
+  }
+
+  .concierge-chat-box {
+    width: calc(100vw - 32px) !important;
+    height: 420px !important;
+    max-width: 360px;
+  }
+}

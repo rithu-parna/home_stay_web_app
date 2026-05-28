@@ -58,40 +58,22 @@ export default function LocalConcierge() {
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      bottom: '24px',
-      right: '24px',
-      zIndex: 1000
-    }}>
+    <div className="concierge-container">
       {/* Floating Toggle Button */}
       {!isOpen && (
         <button
           id="concierge-toggle-btn"
           onClick={() => setIsOpen(true)}
-          className="anim-pulse-slow"
-          style={{
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            background: 'var(--accent-gradient)',
-            border: 'none',
-            color: '#fff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 8px 30px rgba(224, 122, 95, 0.4)'
-          }}
+          className="concierge-toggle-btn anim-pulse-slow"
           title="Open Vela Concierge"
         >
-          <MessageSquare size={26} />
+          <MessageSquare className="concierge-toggle-icon" />
         </button>
       )}
 
       {/* Expanded Chat Box */}
       {isOpen && (
-        <div className="glass-panel anim-scale-in" style={{
+        <div className="glass-panel anim-scale-in concierge-chat-box" style={{
           width: '360px',
           height: '500px',
           borderRadius: '24px',
