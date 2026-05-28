@@ -45,7 +45,7 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
             style={{ padding: '0.5rem 1rem', borderRadius: '12px' }}
           >
             <ArrowLeft size={16} />
-            Back to Explore
+            <span className="btn-text">Back to Explore</span>
           </button>
 
           <div style={{ display: 'flex', gap: '0.8rem' }}>
@@ -60,7 +60,7 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
               }}
             >
               <Heart size={16} fill={isSaved ? "var(--accent)" : "none"} />
-              {isSaved ? 'Saved' : 'Save Stay'}
+              <span className="btn-text">{isSaved ? 'Saved' : 'Save Stay'}</span>
             </button>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
         {/* Title and Ratings Header */}
         <div style={{ marginBottom: '1.5rem' }}>
           <span className="accent-badge" style={{ marginBottom: '0.5rem' }}>{category}</span>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{title}</h2>
+          <h2 className="detail-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{title}</h2>
           
           <div style={{
             display: 'flex',
@@ -121,7 +121,7 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
               }} className="detail-main-img-box">
                 {/* Media Toggle overlay */}
                 {listing.video && (
-                  <div style={{
+                  <div className="media-toggle-overlay" style={{
                     position: 'absolute',
                     top: '16px',
                     right: '16px',
@@ -474,6 +474,25 @@ export default function ListingDetail({ listing, isSaved, onToggleSave, onClose,
           }
           .detail-main-img-box {
             height: 300px !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .detail-title {
+            font-size: 1.8rem !important;
+          }
+          .detail-main-img-box {
+            height: 230px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .btn-text {
+            display: none !important;
+          }
+          .media-toggle-overlay {
+            top: 8px !important;
+            right: 8px !important;
+            transform: scale(0.85);
+            transform-origin: top right;
           }
         }
       `}} />

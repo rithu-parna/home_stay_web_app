@@ -79,7 +79,7 @@ export default function BookingPanel({ listing, onReserve }) {
   };
 
   return (
-    <div className="glass-panel" style={{
+    <div className="glass-panel booking-panel-card" style={{
       borderRadius: '24px',
       padding: '2rem',
       position: 'sticky',
@@ -113,7 +113,7 @@ export default function BookingPanel({ listing, onReserve }) {
       </div>
 
       {/* Date Selectors */}
-      <div style={{
+      <div className="booking-dates-grid" style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
         gap: '0.75rem'

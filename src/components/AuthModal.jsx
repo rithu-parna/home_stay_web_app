@@ -58,7 +58,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
       justifyContent: 'center',
       zIndex: 1000,
       padding: '1rem'
-    }} className="anim-fade">
+    }} className="anim-fade auth-modal-overlay">
       
       {/* Modal Card */}
       <div className="glass-panel auth-modal-card" style={{
@@ -338,12 +338,26 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
           to { transform: rotate(360deg); }
         }
         @media (max-width: 650px) {
+          .auth-modal-overlay {
+            padding: 0 !important;
+          }
           .auth-img-side {
             display: none !important;
           }
           .auth-modal-card {
-            max-width: 420px !important;
-            height: auto !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 100vh !important;
+            max-height: 100vh !important;
+            border-radius: 0px !important;
+            border: none !important;
+            flex-direction: column !important;
+          }
+          .auth-form-side {
+            padding: 2.5rem 1.5rem !important;
+            width: 100% !important;
+            height: 100% !important;
+            flex: 1 !important;
           }
           .mobile-badge {
             display: inline-block !important;

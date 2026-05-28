@@ -4,7 +4,7 @@ import { PlusCircle, BarChart3, List, ClipboardList, Check, X, ShieldCheck, Doll
 
 export default function HostDashboard({ listings, onAddListing, onDeleteListing }) {
   const [activeSubTab, setActiveSubTab] = useState('overview');
-  
+
   // Form states for adding new listing
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
@@ -27,7 +27,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
   ]);
 
   const handleBookingAction = (id, action) => {
-    setHostBookings(prev => 
+    setHostBookings(prev =>
       prev.map(b => b.id === id ? { ...b, status: action === 'approve' ? 'approved' : 'declined' } : b)
     );
     setToast(`Booking ${action === 'approve' ? 'Approved' : 'Declined'} successfully!`);
@@ -36,7 +36,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
   const handleAddSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!title || !location || !price || !description) {
       setToast('Please fill out all required fields');
       setTimeout(() => setToast(''), 3000);
@@ -74,7 +74,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
     onAddListing(newListing);
     setToast('Listing published successfully!');
     setTimeout(() => setToast(''), 3000);
-    
+
     // Reset Form
     setTitle('');
     setLocation('');
@@ -124,7 +124,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
           </p>
         </div>
 
-        <button 
+        <button
           id="host-tab-create-btn"
           onClick={() => setActiveSubTab('create')}
           className="btn btn-primary"
@@ -200,7 +200,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
       {/* TAB 1: OVERVIEW & STATS */}
       {activeSubTab === 'overview' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-          
+
           {/* Stats Cards Row */}
           <div style={{
             display: 'grid',
@@ -239,7 +239,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
             <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>
               Your Managed Listings
             </h3>
-            
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {listings.filter(l => l.host.name.includes('You')).length === 0 ? (
                 <div style={{
@@ -259,7 +259,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
                 </div>
               ) : (
                 listings.filter(l => l.host.name.includes('You')).map((lst) => (
-                  <div 
+                  <div
                     key={lst.id}
                     className="glass-panel"
                     style={{
@@ -286,7 +286,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                       <span className="accent-badge" style={{ fontSize: '0.72rem' }}>{lst.category}</span>
-                      <button 
+                      <button
                         onClick={() => onDeleteListing(lst.id)}
                         className="btn"
                         style={{
@@ -319,8 +319,8 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {hostBookings.map((b) => (
-              <div 
-                key={b.id} 
+              <div
+                key={b.id}
                 className="glass-panel"
                 style={{
                   borderRadius: '16px',
@@ -348,11 +348,11 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
                       {b.status.toUpperCase()}
                     </span>
                   </div>
-                  
+
                   <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                     Requesting: <strong>{b.listingTitle}</strong>
                   </span>
-                  
+
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-tertiary)', marginTop: '0.3rem' }}>
                     Stay Dates: {b.checkIn} to {b.checkOut} • Estimated payout: <strong>${b.amount}</strong>
                   </div>
@@ -360,7 +360,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
                 {b.status === 'pending' && (
                   <div style={{ display: 'flex', gap: '0.6rem' }}>
-                    <button 
+                    <button
                       onClick={() => handleBookingAction(b.id, 'approve')}
                       className="btn btn-primary"
                       style={{
@@ -372,7 +372,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
                       <Check size={14} />
                       Approve
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleBookingAction(b.id, 'decline')}
                       className="btn btn-secondary"
                       style={{
@@ -414,15 +414,15 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
             gridTemplateColumns: '2fr 1fr',
             gap: '1.25rem'
           }} className="form-grid-columns">
-            
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Listing Title *</label>
-              <input 
+              <input
                 id="host-input-title"
-                type="text" 
+                type="text"
                 placeholder="e.g. Modern Glass Dome with Aurora Views"
-                value={title} 
-                onChange={(e) => setTitle(e.target.value)} 
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 className="input-field"
                 required
               />
@@ -430,10 +430,10 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Category *</label>
-              <select 
+              <select
                 id="host-input-category"
-                value={category} 
-                onChange={(e) => setCategory(e.target.value)} 
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 className="input-field"
                 style={{ appearance: 'none', cursor: 'pointer' }}
               >
@@ -453,12 +453,12 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
           }} className="form-grid-columns">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Location *</label>
-              <input 
+              <input
                 id="host-input-location"
-                type="text" 
+                type="text"
                 placeholder="e.g. Tromso, Norway"
-                value={location} 
-                onChange={(e) => setLocation(e.target.value)} 
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 className="input-field"
                 required
               />
@@ -466,12 +466,12 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Price per Night ($) *</label>
-              <input 
+              <input
                 id="host-input-price"
-                type="number" 
-                value={price} 
+                type="number"
+                value={price}
                 min={1}
-                onChange={(e) => setPrice(e.target.value)} 
+                onChange={(e) => setPrice(e.target.value)}
                 className="input-field"
                 required
               />
@@ -490,7 +490,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
                 { name: 'Industrial Loft', url: '/images/loft.png' },
                 { name: 'Bamboo Dome', url: '/images/dome.png' }
               ].map((preset) => (
-                <div 
+                <div
                   key={preset.url}
                   onClick={() => setSelectedImg(preset.url)}
                   style={{
@@ -513,7 +513,7 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Description *</label>
-            <textarea 
+            <textarea
               id="host-input-description"
               placeholder="Provide a detailed, compelling description of your architecturally unique stays..."
               value={description}
@@ -526,11 +526,11 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Amenities (comma separated)</label>
-            <input 
+            <input
               id="host-input-amenities"
-              type="text" 
-              value={amenitiesText} 
-              onChange={(e) => setAmenitiesText(e.target.value)} 
+              type="text"
+              value={amenitiesText}
+              onChange={(e) => setAmenitiesText(e.target.value)}
               className="input-field"
             />
           </div>
@@ -542,42 +542,42 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
           }} className="form-grid-columns">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Max Guests</label>
-              <input 
+              <input
                 id="host-input-guests"
-                type="number" 
-                value={maxGuests} 
+                type="number"
+                value={maxGuests}
                 min={1}
-                onChange={(e) => setMaxGuests(e.target.value)} 
+                onChange={(e) => setMaxGuests(e.target.value)}
                 className="input-field"
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Bedrooms</label>
-              <input 
+              <input
                 id="host-input-bedrooms"
-                type="number" 
-                value={bedrooms} 
+                type="number"
+                value={bedrooms}
                 min={1}
-                onChange={(e) => setBedrooms(e.target.value)} 
+                onChange={(e) => setBedrooms(e.target.value)}
                 className="input-field"
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Bathrooms</label>
-              <input 
+              <input
                 id="host-input-bathrooms"
-                type="number" 
-                value={bathrooms} 
+                type="number"
+                value={bathrooms}
                 min={1}
-                onChange={(e) => setBathrooms(e.target.value)} 
+                onChange={(e) => setBathrooms(e.target.value)}
                 className="input-field"
               />
             </div>
           </div>
 
-          <button 
+          <button
             id="host-submit-listing-btn"
-            type="submit" 
+            type="submit"
             className="btn btn-primary"
             style={{ width: '100%', padding: '1rem', borderRadius: '12px', fontSize: '1rem', fontWeight: 600, marginTop: '1rem' }}
           >
@@ -587,7 +587,8 @@ export default function HostDashboard({ listings, onAddListing, onDeleteListing 
       )}
 
       {/* Responsive adjustments */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @media (max-width: 600px) {
           .form-grid-columns {
             grid-template-columns: 1fr !important;

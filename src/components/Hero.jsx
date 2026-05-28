@@ -141,8 +141,6 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
       {/* Categories Scroller */}
       <div className="container" style={{ width: '100%', marginTop: '2.5rem', position: 'relative', zIndex: 2 }}>
         <div className="category-bar custom-scrollbar" style={{
-          display: 'flex',
-          justifyContent: 'center',
           borderBottom: '1px solid var(--border-color)',
           paddingBottom: '0.2rem'
         }}>

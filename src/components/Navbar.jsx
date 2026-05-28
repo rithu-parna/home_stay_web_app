@@ -50,7 +50,7 @@ export default function Navbar({
               </linearGradient>
             </defs>
           </svg>
-          <span style={{
+          <span className="logo-text" style={{
             fontSize: '1.4rem',
             fontWeight: 700,
             letterSpacing: '-0.5px',
@@ -63,7 +63,7 @@ export default function Navbar({
 
         {/* Global Search Bar (Only shown on Explore tab) */}
         {activeTab === 'explore' && (
-          <div style={{
+          <div className="navbar-search-container" style={{
             position: 'relative',
             flex: '0 1 400px',
             display: 'block'
@@ -82,7 +82,7 @@ export default function Navbar({
               placeholder="Search by destination (e.g. Bali, France...)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="input-field"
+              className="input-field navbar-search-input"
               style={{
                 paddingLeft: '2.8rem',
                 borderRadius: '50px',
@@ -322,6 +322,28 @@ export default function Navbar({
         @media (max-width: 900px) {
           .desktop-only { display: none !important; }
           .mobile-only-flex { display: flex !important; }
+        }
+        @media (max-width: 650px) {
+          .logo-text {
+            display: none !important;
+          }
+          .navbar-search-container {
+            flex: 1 !important;
+            max-width: 250px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .navbar-search-input::placeholder {
+            color: transparent !important;
+          }
+          .navbar-search-container {
+            max-width: 160px !important;
+          }
+        }
+        @media (max-width: 360px) {
+          .navbar-search-container {
+            display: none !important;
+          }
         }
       `}} />
     </nav>

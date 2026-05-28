@@ -189,7 +189,7 @@ export default function UserProfile({
       )}
 
       {/* Bookings vs Saved Stays Sub Navigation Tabs */}
-      <div style={{
+      <div className="profile-sub-tabs" style={{
         display: 'flex',
         borderBottom: '1px solid var(--border-color)',
         marginBottom: '1.5rem',
