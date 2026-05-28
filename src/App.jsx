@@ -40,7 +40,14 @@ export default function App() {
   const [listings, setListings] = useState(() => {
     const cached = localStorage.getItem('vela-listings');
     const parsed = cached ? JSON.parse(cached) : null;
-    if (!parsed || parsed.length < listingsData.length) {
+    
+    const needsReset = !parsed || parsed.length < listingsData.length || 
+      parsed.some((lst, idx) => {
+        const fresh = listingsData[idx];
+        return !fresh || JSON.stringify(lst.images) !== JSON.stringify(fresh.images) || lst.video !== fresh.video;
+      });
+
+    if (needsReset) {
       return listingsData;
     }
     return parsed;

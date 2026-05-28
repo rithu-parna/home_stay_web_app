@@ -661,41 +661,86 @@ const rawListingsData = [
   }
 ];
 
-const extraCategoryImages = {
+const categoryImages = {
   Cabin: [
+    "/images/cabin/cabin_1.jpg",
+    "/images/cabin/cabin_2.jpg",
+    "/images/cabin/cabin_3.jpg",
+    "/images/cabin/cabin_4.jpg",
     "/images/cabin/cabin_5.jpg",
     "/images/cabin/cabin_6.jpg",
-    "/images/cabin/cabin_7.jpg"
+    "/images/cabin/cabin_7.jpg",
+    "/images/cabin/cabin_8.jpg",
+    "/images/cabin/cabin_9.jpg",
+    "/images/cabin.png"
   ],
   Villa: [
     "/images/villa/villa_1.jpg",
     "/images/villa/villa_2.jpg",
-    "/images/villa/villa_3.jpg"
+    "/images/villa/villa_3.jpg",
+    "/images/villa/villa_4.jpg",
+    "/images/villa/villa_5.jpg",
+    "/images/villa.png"
   ],
   Loft: [
     "/images/loft/loft_1.jpg",
     "/images/loft/loft_2.jpg",
-    "/images/loft/loft_3.jpg"
+    "/images/loft/loft_3.jpg",
+    "/images/loft/loft_4.jpg",
+    "/images/loft/loft_5.jpg",
+    "/images/loft.png"
   ],
   Dome: [
     "/images/dome/dome_1.jpg",
     "/images/dome/dome_2.jpg",
+    "/images/dome/dome_3.jpg",
+    "/images/dome/dome_4.jpg",
     "/images/dome.png"
   ],
   Heritage: [
     "/images/heritage/heritage_1.jpg",
+    "/images/heritage/heritage_2.jpg",
     "/images/heritage/heritage_3.jpg",
-    "/images/heritage/heritage_4.jpg"
+    "/images/heritage/heritage_4.jpg",
+    "/images/heritage/heritage_5.jpg",
+    "/images/heritage.png"
   ]
 };
 
-// Map through raw listings and enrich them with categories' stock photos
-export const listingsData = rawListingsData.map((l, index) => {
-  const baseImages = l.images || [];
-  const categoryExtras = extraCategoryImages[l.category] || [];
-  const uniqueImages = Array.from(new Set([...baseImages, ...categoryExtras]));
+const categoryVideos = {
+  Cabin: "/videos/livingspace.mp4",
+  Villa: "/videos/glide-over-coastal-beach.mp4",
+  Loft: "/videos/kitchen.mp4",
+  Dome: "/videos/bathroom.mp4",
+  Heritage: "/videos/house_tour.mp4"
+};
+
+const categoryCounters = {
+  Cabin: 0,
+  Villa: 0,
+  Loft: 0,
+  Dome: 0,
+  Heritage: 0
+};
+
+// Map through raw listings, rotate images uniquely, and allocate category-specific videos
+export const listingsData = rawListingsData.map((l) => {
+  const cat = l.category;
+  const count = categoryCounters[cat] !== undefined ? categoryCounters[cat]++ : 0;
+  const availableImages = categoryImages[cat] || [];
+  
+  // Shift available images based on category counter index
+  const rotatedImages = [];
+  const len = availableImages.length;
+  if (len > 0) {
+    for (let i = 0; i < len; i++) {
+      rotatedImages.push(availableImages[(i + count) % len]);
+    }
+  }
+
   return {
     ...l,
-    images: uniqueImages.slice(0, 4)
+    images: rotatedImages.length > 0 ? rotatedImages.slice(0, 4) : l.images,
+    video: categoryVideos[cat] || l.video
   };
 });
