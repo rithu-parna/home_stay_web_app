@@ -66,33 +66,22 @@ export default function Hero({ activeCategory, setActiveCategory }) {
               transition: 'opacity 1.2s ease-in-out'
             }}
           >
-            <source 
-              src={video.url} 
-              type="video/mp4" 
+            <source
+              src={video.url}
+              type="video/mp4"
             />
           </video>
         );
       })}
 
-      {/* Radial and Linear Gradient Overlays to blend the video with the app theme */}
+      {/* Top and Bottom Gradient Overlays to blend vertically while keeping left & right sides crisp and full-width */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        background: 'radial-gradient(circle at center, transparent 20%, var(--bg-primary) 90%)',
-        zIndex: 1,
-        pointerEvents: 'none'
-      }} />
-      
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'linear-gradient(to bottom, rgba(14, 61, 62, 0.05) 0%, transparent 50%, var(--bg-primary) 100%)',
+        background: 'linear-gradient(to bottom, var(--bg-primary) 0%, transparent 15%, transparent 80%, var(--bg-primary) 100%)',
         zIndex: 1,
         pointerEvents: 'none'
       }} />
