@@ -198,6 +198,7 @@ export default function Navbar({
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
+         
 
            {/* Profile Button / Log In */}
           {isLoggedIn ? (
@@ -223,18 +224,16 @@ export default function Navbar({
         </div>
 
         {/* Mobile Actions (Menu Toggle) */}
-        <div style={{ display: 'none', gap: '0.8rem' }} className="mobile-only-flex">
-          <button onClick={toggleTheme} className="btn-icon" style={{ width: '36px', height: '36px' }}>
+        <div style={{ display: 'none', gap: '0.8rem' }} className="mobile-only-flex">  <button onClick={toggleTheme} className="btn-icon" style={{ width: '36px', height: '36px' }}>
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          
-          <button 
+          {/* <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="btn-icon"
             style={{ width: '36px', height: '36px' }}
           >
             {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
+          </button> */}
         </div>
       </div>
 
