@@ -117,7 +117,7 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
 
         {/* Main Premium Heading */}
         <h1 className="hero-title-entrance" style={{
-          fontSize: 'clamp(2.4rem, 6vw, 4.2rem)',
+          fontSize: 'clamp(1.7rem, 6vw, 4.2rem)',
           fontWeight: '700',
           lineHeight: 1.1,
           margin: 0
@@ -128,7 +128,7 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
 
         {/* Supporting Text */}
         <p className="hero-subtitle-entrance" style={{
-          fontSize: 'clamp(1rem, 2vw, 1.15rem)',
+          fontSize: 'clamp(0.85rem, 2vw, 1.15rem)',
           color: 'var(--text-secondary)',
           maxWidth: '620px',
           margin: '0.5rem auto 0 auto',

@@ -540,6 +540,27 @@ h6 {
   }
 }
 
+/* ─── MOBILE TYPE-SCALE & SPACING REDUCTIONS ─── */
+@media (max-width: 768px) {
+  /* Section headings */
+  h2 { font-size: 1.35rem !important; }
+  h3 { font-size: 1rem !important; }
+
+  /* Listing card title stays readable */
+  .glass-card h3 { font-size: 0.98rem !important; }
+
+  /* Category tabs: tighter */
+  .category-tab { min-width: 68px !important; padding: 0.55rem 0.6rem !important; }
+  .category-tab span { font-size: 0.72rem !important; }
+
+  /* Footer: compact padding + smaller text */
+  footer .container { padding: 1.75rem 1rem 1.25rem !important; }
+  footer h4         { font-size: 0.72rem !important; margin-bottom: 0.7rem !important; }
+  footer span,
+  footer p          { font-size: 0.8rem !important; }
+  footer input      { font-size: 0.8rem !important; }
+}
+
 /* ─── MOBILE BOTTOM NAV BAR ─── */
 .mobile-bottom-nav {
   display: none; /* hidden on desktop */
