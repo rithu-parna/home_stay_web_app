@@ -194,6 +194,7 @@ export default function Navbar({
           {/* Accent Palette Switcher */}
           <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', marginRight: '0.2rem' }}>
             {[
+              { id: 'orange', color: '#e07a5f', name: 'Classic Orange' },
               { id: 'rose', color: '#f43f5e', name: 'Rose Orchid' },
               { id: 'sunset', color: '#f59e0b', name: 'Sunset Amber' },
               { id: 'emerald', color: '#10b981', name: 'Emerald Gold' },
@@ -258,6 +259,7 @@ export default function Navbar({
           {/* Mobile Accent Palette Switcher */}
           <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', marginRight: '0.1rem' }}>
             {[
+              { id: 'orange', color: '#e07a5f', name: 'Classic Orange' },
               { id: 'rose', color: '#f43f5e', name: 'Rose Orchid' },
               { id: 'sunset', color: '#f59e0b', name: 'Sunset Amber' },
               { id: 'emerald', color: '#10b981', name: 'Emerald Gold' },

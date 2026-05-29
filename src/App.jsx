@@ -19,10 +19,19 @@ export default function App() {
 
   // Accent Color Theme Customizer
   const [accentTheme, setAccentTheme] = useState(() => {
-    return localStorage.getItem('vela-accent-theme') || 'rose';
+    return localStorage.getItem('vela-accent-theme') || 'orange';
   });
 
   const accentThemes = {
+    orange: {
+      accentBase: '14, 61%, 62%',
+      accentLight: 'hsl(14, 75%, 70%)',
+      accentDark: 'hsl(14, 55%, 50%)',
+      accentGradient: 'linear-gradient(135deg, hsl(14, 75%, 65%) 0%, hsl(32, 85%, 65%) 100%)',
+      accentRGB: '224, 122, 95',
+      logoColor1: '#e07a5f',
+      logoColor2: '#e99c86'
+    },
     rose: {
       accentBase: '342, 89%, 60%',
       accentLight: 'hsl(342, 95%, 70%)',
@@ -62,7 +71,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    const palette = accentThemes[accentTheme] || accentThemes.rose;
+    const palette = accentThemes[accentTheme] || accentThemes.orange;
     const root = document.documentElement;
     root.style.setProperty('--accent-base', palette.accentBase);
     root.style.setProperty('--accent-light', palette.accentLight);

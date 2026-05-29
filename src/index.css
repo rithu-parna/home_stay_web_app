@@ -5,14 +5,16 @@
   --font-sans: 'Outfit', sans-serif;
   --font-serif: 'Playfair Display', serif;
 
-  /* Accent color (Royal Rose Crimson & Violet Orchid) */
-  --accent-base: 342, 89%, 60%;
-  /* HSL for #f43f5e */
+  /* Accent color (Classic Terracotta Orange) */
+  --accent-base: 14, 61%, 62%;
+  /* HSL for #e07a5f */
   --accent: hsl(var(--accent-base));
-  --accent-light: hsl(342, 95%, 70%);
-  --accent-dark: hsl(342, 85%, 45%);
-  --accent-gradient: linear-gradient(135deg, #f43f5e 0%, #a855f7 100%);
-  --accent-rgb: 244, 63, 94;
+  --accent-light: hsl(14, 75%, 70%);
+  --accent-dark: hsl(14, 55%, 50%);
+  --accent-gradient: linear-gradient(135deg, hsl(14, 75%, 65%) 0%, hsl(32, 85%, 65%) 100%);
+  --accent-rgb: 224, 122, 95;
+  --logo-color-1: #e07a5f;
+  --logo-color-2: #e99c86;
 
   /* Transition timings */
   --transition-fast: 0.2s ease;
