@@ -330,8 +330,14 @@ export default function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUser({ name: 'Alex Mercer', email: 'alex.mercer@velastays.com' });
+    setSavedIds([]);
+    setRecentIds([]);
+    setReservations([]);
     localStorage.removeItem('vela-is-logged-in');
     localStorage.removeItem('vela-user');
+    localStorage.removeItem('vela-saved-ids');
+    localStorage.removeItem('vela-recent-ids');
+    localStorage.removeItem('vela-reservations');
     setActiveTab('explore'); // Reset to public explore page
   };
 
