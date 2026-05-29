@@ -1170,3 +1170,33 @@ h6 {
     height: 48px;
   }
 }
+
+/* ─── TRENDING HEADER ACTIONS RESPONSIVENESS ─── */
+.trending-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 992px) {
+  .trending-header-actions {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .trending-header-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 0.75rem;
+  }
+  .trending-header-actions button,
+  .trending-header-actions .btn-premium-explore {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}

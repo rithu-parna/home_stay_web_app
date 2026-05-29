@@ -423,7 +423,7 @@ export default function App() {
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'baseline',
+                alignItems: 'center',
                 marginBottom: '1.5rem',
                 flexWrap: 'wrap',
                 gap: '1rem'
@@ -436,7 +436,7 @@ export default function App() {
                     Most popular design marvels highly rated by architectural explorers.
                   </p>
                 </div>
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                <div className="trending-header-actions">
                   {recentStays.length > 0 && (
                     <button
                       onClick={() => setShowRecentModal(true)}
@@ -445,15 +445,17 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.4rem',
-                        padding: '0.55rem 1.2rem',
-                        fontSize: '0.85rem',
-                        borderRadius: '20px',
-                        borderColor: 'var(--border-color)',
-                        background: 'var(--bg-glass)',
-                        color: 'var(--text-main)',
+                        padding: '0.6rem 1.3rem',
+                        fontSize: '0.88rem',
+                        borderRadius: '12px',
+                        border: '1.5px solid var(--border-color)',
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-primary)',
                         cursor: 'pointer',
                         fontWeight: '600',
-                        transition: 'all 0.2s'
+                        transition: 'all 0.2s',
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.borderColor = 'var(--accent)';
@@ -472,6 +474,10 @@ export default function App() {
                   <button
                     onClick={() => setActiveTab('collections')}
                     className="btn-premium-explore"
+                    style={{
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0
+                    }}
                   >
                     Explore Collections
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="arrow-icon">
