@@ -45,7 +45,7 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
       gap: '1.5rem',
       overflow: 'hidden',
       background: 'var(--bg-primary)',
-      minHeight: '420px',
+      minHeight: '600px',
       justifyContent: 'center'
     }}>
       {/* Background Videos (Pre-loaded with smooth cross-fade) */}
