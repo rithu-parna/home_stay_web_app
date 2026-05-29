@@ -30,7 +30,7 @@ export default function RecentStaysModal({
     }} onClick={onClose}>
       <div 
         style={{
-          background: 'var(--bg-glass)',
+          background: 'var(--glass-bghistory)',
           border: '1px solid var(--border-color)',
           borderRadius: '24px',
           padding: '1.5rem',
@@ -39,7 +39,7 @@ export default function RecentStaysModal({
           maxHeight: '80vh',
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+          boxShadow: 'var(--hover-shadow)',
           position: 'relative',
           gap: '1rem'
         }}
@@ -60,7 +60,7 @@ export default function RecentStaysModal({
               fontWeight: 700,
               fontFamily: 'var(--font-serif)',
               margin: 0,
-              color: 'var(--text-main)'
+              color: 'var(--text-primary)'
             }}>
               Recently Viewed
             </h3>
@@ -89,7 +89,7 @@ export default function RecentStaysModal({
               justifyContent: 'center',
               transition: 'background-color 0.2s'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--border-color)'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
             <X size={18} />
@@ -145,7 +145,7 @@ export default function RecentStaysModal({
                   padding: '0.6rem',
                   borderRadius: '16px',
                   border: '1px solid var(--border-color)',
-                  background: 'var(--bg-glass)',
+                  background: 'var(--bg-secondary)',
                   cursor: 'pointer',
                   position: 'relative',
                   transition: 'transform 0.2s, border-color 0.2s, background-color 0.2s',
@@ -155,18 +155,18 @@ export default function RecentStaysModal({
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
                   e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb), 0.3)';
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)';
+                  e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'none';
                   e.currentTarget.style.borderColor = 'var(--border-color)';
-                  e.currentTarget.style.backgroundColor = 'var(--bg-glass)';
+                  e.currentTarget.style.backgroundColor = 'var(--bg-primary)';
                 }}
               >
                 {/* Thumbnail Image */}
                 <div style={{ flexShrink: 0 }}>
                   <img 
-                    src={listing.image || '/images/cabin/cabin_1.jpg'} 
+                    src={(listing.images && listing.images[0]) || '/images/cabin/cabin_1.jpg'} 
                     alt={listing.title} 
                     style={{
                       width: '72px',
@@ -200,7 +200,7 @@ export default function RecentStaysModal({
                       margin: '2px 0 0 0',
                       fontSize: '0.88rem',
                       fontWeight: 600,
-                      color: 'var(--text-main)',
+                      color: 'var(--text-primary)',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis'
@@ -218,7 +218,7 @@ export default function RecentStaysModal({
                     <span style={{
                       fontSize: '0.85rem',
                       fontWeight: 700,
-                      color: 'var(--text-main)'
+                      color: 'var(--text-primary)'
                     }}>
                       {listing.price}
                       <span style={{ fontWeight: 400, fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
@@ -244,7 +244,7 @@ export default function RecentStaysModal({
                     position: 'absolute',
                     top: '8px',
                     right: '8px',
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    background: 'var(--bg-tertiary)',
                     border: 'none',
                     borderRadius: '50%',
                     width: '24px',
@@ -262,7 +262,7 @@ export default function RecentStaysModal({
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = 'var(--text-tertiary)';
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                    e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)';
                   }}
                 >
                   <X size={12} />

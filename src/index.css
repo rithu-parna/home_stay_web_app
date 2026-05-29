@@ -39,7 +39,7 @@
   /* Cool gray */
   --text-tertiary: #92929e;
   /* Muted gray */
-
+  --glass-bghistory: rgba(255, 255, 255, 0.527);
   --glass-bg: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(255, 255, 255, 0.4);
   --glass-shadow: 0 8px 32px 0 rgba(142, 135, 122, 0.08);
@@ -74,7 +74,7 @@
   /* Silver sand */
   --text-tertiary: #6b6b75;
   /* Slate gray */
-
+  --glass-bghistory: rgba(19, 19, 26, 0.606);
   --glass-bg: rgba(19, 19, 26, 0.75);
   --glass-border: rgba(255, 255, 255, 0.04);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
