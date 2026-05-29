@@ -9,6 +9,8 @@ import UserProfile from './components/UserProfile';
 import HostDashboard from './components/HostDashboard';
 import LocalConcierge from './components/LocalConcierge';
 import AuthModal from './components/AuthModal';
+import RecentStaysModal from './components/RecentStaysModal';
+import { Clock } from 'lucide-react';
 import { listingsData } from './data/listings';
 
 export default function App() {
@@ -92,6 +94,7 @@ export default function App() {
     return localStorage.getItem('vela-is-logged-in') === 'true';
   });
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showRecentModal, setShowRecentModal] = useState(false);
   const [authRedirectAction, setAuthRedirectAction] = useState(null); // 'profile', 'saved', 'book', 'host'
   const [pendingBooking, setPendingBooking] = useState(null);
 
@@ -272,6 +275,19 @@ export default function App() {
     });
   };
 
+  const handleSelectRecentStay = (listing) => {
+    handleViewListing(listing);
+    setShowRecentModal(false);
+  };
+
+  const handleRemoveRecentStay = (id) => {
+    setRecentIds(prev => prev.filter(item => item !== id));
+  };
+
+  const handleClearRecentStays = () => {
+    setRecentIds([]);
+  };
+
   // Add listing from Host panel
   const handleAddListing = (newListing) => {
     setListings(prev => [newListing, ...prev]);
@@ -420,16 +436,50 @@ export default function App() {
                     Most popular design marvels highly rated by architectural explorers.
                   </p>
                 </div>
-                <button
-                  onClick={() => setActiveTab('collections')}
-                  className="btn-premium-explore"
-                >
-                  Explore Collections
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="arrow-icon">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </button>
+                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                  {recentStays.length > 0 && (
+                    <button
+                      onClick={() => setShowRecentModal(true)}
+                      className="btn"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                        padding: '0.55rem 1.2rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '20px',
+                        borderColor: 'var(--border-color)',
+                        background: 'var(--bg-glass)',
+                        color: 'var(--text-main)',
+                        cursor: 'pointer',
+                        fontWeight: '600',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = 'var(--accent)';
+                        e.currentTarget.style.boxShadow = '0 0 10px rgba(var(--accent-rgb), 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'var(--border-color)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <Clock size={14} style={{ color: 'var(--accent)' }} />
+                      Recently Viewed ({recentStays.length})
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => setActiveTab('collections')}
+                    className="btn-premium-explore"
+                  >
+                    Explore Collections
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="arrow-icon">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               {/* Horizontal Scroll Row for Trending Stays */}
@@ -1502,6 +1552,27 @@ export default function App() {
       {/* Floating AI Concierge Agent */}
       <LocalConcierge />
 
+      {/* Floating Recently Viewed Button */}
+      {recentStays.length > 0 && activeTab === 'explore' && (
+        <div className="recent-floater-container">
+          <button
+            onClick={() => setShowRecentModal(true)}
+            className="recent-floater-btn"
+            title="Recently Viewed Stays"
+            style={{
+              background: 'var(--bg-glass)',
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-main)'
+            }}
+          >
+            <Clock size={24} />
+            <span className="recent-floater-badge">
+              {recentStays.length}
+            </span>
+          </button>
+        </div>
+      )}
+
       {/* Advanced Auth Modal */}
       <AuthModal
         isOpen={showAuthModal}
@@ -1511,6 +1582,16 @@ export default function App() {
           setAuthRedirectAction(null);
         }}
         onLoginSuccess={handleLoginSuccess}
+      />
+
+      {/* Recently Viewed Stays Modal */}
+      <RecentStaysModal
+        isOpen={showRecentModal}
+        onClose={() => setShowRecentModal(false)}
+        recentStays={recentStays}
+        onSelectStay={handleSelectRecentStay}
+        onRemoveStay={handleRemoveRecentStay}
+        onClearAll={handleClearRecentStays}
       />
 
       <style dangerouslySetInnerHTML={{
