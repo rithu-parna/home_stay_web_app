@@ -252,6 +252,11 @@ export default function App() {
     localStorage.setItem('vela-user', JSON.stringify(user));
   }, [user]);
 
+  // Scroll to top when activeTab or activeListing changes to ensure the user sees the new page content immediately
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeTab, activeListing]);
+
   const toggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
