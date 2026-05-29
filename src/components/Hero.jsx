@@ -110,7 +110,7 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
           textTransform: 'uppercase',
           fontSize: '0.75rem',
           backdropFilter: 'blur(4px)',
-          background: 'rgba(224, 122, 95, 0.12)'
+          background: 'rgba(var(--accent-rgb), 0.12)'
         }}>
           Introducing VelaStays
         </span>

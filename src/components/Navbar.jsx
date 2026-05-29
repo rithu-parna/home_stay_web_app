@@ -12,7 +12,9 @@ export default function Navbar({
   savedCount,
   onOpenProfile,
   isLoggedIn,
-  user
+  user,
+  accentTheme = 'rose',
+  setAccentTheme
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -45,8 +47,8 @@ export default function Navbar({
             <path d="M16 6L24 13V26H21V18H11V26H8V13L16 6Z" fill="#fff" fillOpacity="0.2" />
             <defs>
               <linearGradient id="logoGrad" x1="2" y1="15" x2="30" y2="15" gradientUnits="userSpaceOnUse">
-                <stop stopColor="hsl(14, 75%, 62%)" />
-                <stop offset="1" stopColor="hsl(32, 85%, 62%)" />
+                <stop stopColor="var(--logo-color-1)" />
+                <stop offset="1" stopColor="var(--logo-color-2)" />
               </linearGradient>
             </defs>
           </svg>
@@ -189,6 +191,34 @@ export default function Navbar({
             background: 'var(--border-color)'
           }} />
 
+          {/* Accent Palette Switcher */}
+          <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', marginRight: '0.2rem' }}>
+            {[
+              { id: 'rose', color: '#f43f5e', name: 'Rose Orchid' },
+              { id: 'sunset', color: '#f59e0b', name: 'Sunset Amber' },
+              { id: 'emerald', color: '#10b981', name: 'Emerald Gold' },
+              { id: 'ocean', color: '#06b6d4', name: 'Ocean Breeze' }
+            ].map(pal => (
+              <button
+                key={pal.id}
+                onClick={() => setAccentTheme(pal.id)}
+                title={pal.name}
+                style={{
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  background: pal.color,
+                  border: accentTheme === pal.id ? '1.5px solid #fff' : '1.5px solid transparent',
+                  boxShadow: accentTheme === pal.id ? `0 0 6px ${pal.color}` : 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'all 0.2s ease',
+                  transform: accentTheme === pal.id ? 'scale(1.2)' : 'scale(1)'
+                }}
+              />
+            ))}
+          </div>
+
           {/* Theme Toggle */}
           <button 
             id="theme-toggle-btn"
@@ -224,7 +254,36 @@ export default function Navbar({
         </div>
 
         {/* Mobile Actions (Menu Toggle) */}
-        <div style={{ display: 'none', gap: '0.8rem' }} className="mobile-only-flex">  <button onClick={toggleTheme} className="btn-icon" style={{ width: '36px', height: '36px' }}>
+        <div style={{ display: 'none', gap: '0.8rem', alignItems: 'center' }} className="mobile-only-flex">
+          {/* Mobile Accent Palette Switcher */}
+          <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', marginRight: '0.1rem' }}>
+            {[
+              { id: 'rose', color: '#f43f5e', name: 'Rose Orchid' },
+              { id: 'sunset', color: '#f59e0b', name: 'Sunset Amber' },
+              { id: 'emerald', color: '#10b981', name: 'Emerald Gold' },
+              { id: 'ocean', color: '#06b6d4', name: 'Ocean Breeze' }
+            ].map(pal => (
+              <button
+                key={pal.id}
+                onClick={() => setAccentTheme(pal.id)}
+                title={pal.name}
+                style={{
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  background: pal.color,
+                  border: accentTheme === pal.id ? '1px solid #fff' : '1px solid transparent',
+                  boxShadow: accentTheme === pal.id ? `0 0 5px ${pal.color}` : 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'all 0.2s ease',
+                  transform: accentTheme === pal.id ? 'scale(1.2)' : 'scale(1)'
+                }}
+              />
+            ))}
+          </div>
+
+          <button onClick={toggleTheme} className="btn-icon" style={{ width: '36px', height: '36px' }}>
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           {/* <button 

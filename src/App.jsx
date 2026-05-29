@@ -17,6 +17,63 @@ export default function App() {
     return localStorage.getItem('vela-theme') || 'dark';
   });
 
+  // Accent Color Theme Customizer
+  const [accentTheme, setAccentTheme] = useState(() => {
+    return localStorage.getItem('vela-accent-theme') || 'rose';
+  });
+
+  const accentThemes = {
+    rose: {
+      accentBase: '342, 89%, 60%',
+      accentLight: 'hsl(342, 95%, 70%)',
+      accentDark: 'hsl(342, 85%, 45%)',
+      accentGradient: 'linear-gradient(135deg, #f43f5e 0%, #a855f7 100%)',
+      accentRGB: '244, 63, 94',
+      logoColor1: '#f43f5e',
+      logoColor2: '#a855f7'
+    },
+    sunset: {
+      accentBase: '38, 92%, 50%',
+      accentLight: 'hsl(38, 95%, 62%)',
+      accentDark: 'hsl(38, 85%, 40%)',
+      accentGradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+      accentRGB: '245, 158, 11',
+      logoColor1: '#f59e0b',
+      logoColor2: '#ef4444'
+    },
+    emerald: {
+      accentBase: '158, 64%, 52%',
+      accentLight: 'hsl(158, 75%, 62%)',
+      accentDark: 'hsl(158, 64%, 40%)',
+      accentGradient: 'linear-gradient(135deg, #059669 0%, #d97706 100%)',
+      accentRGB: '16, 185, 129',
+      logoColor1: '#059669',
+      logoColor2: '#d97706'
+    },
+    ocean: {
+      accentBase: '188, 86%, 53%',
+      accentLight: 'hsl(188, 95%, 62%)',
+      accentDark: 'hsl(188, 86%, 40%)',
+      accentGradient: 'linear-gradient(135deg, #06b6d4 0%, #6366f1 100%)',
+      accentRGB: '6, 182, 212',
+      logoColor1: '#06b6d4',
+      logoColor2: '#6366f1'
+    }
+  };
+
+  useEffect(() => {
+    const palette = accentThemes[accentTheme] || accentThemes.rose;
+    const root = document.documentElement;
+    root.style.setProperty('--accent-base', palette.accentBase);
+    root.style.setProperty('--accent-light', palette.accentLight);
+    root.style.setProperty('--accent-dark', palette.accentDark);
+    root.style.setProperty('--accent-gradient', palette.accentGradient);
+    root.style.setProperty('--accent-rgb', palette.accentRGB);
+    root.style.setProperty('--logo-color-1', palette.logoColor1);
+    root.style.setProperty('--logo-color-2', palette.logoColor2);
+    localStorage.setItem('vela-accent-theme', accentTheme);
+  }, [accentTheme]);
+
   // Navigation Tabs State
   const [activeTab, setActiveTab] = useState('explore');
   const [activeSubTab, setActiveSubTab] = useState('bookings');
@@ -319,6 +376,8 @@ export default function App() {
         onOpenProfile={() => { changeTab('profile'); setActiveSubTab('bookings'); }}
         isLoggedIn={isLoggedIn}
         user={user}
+        accentTheme={accentTheme}
+        setAccentTheme={setAccentTheme}
       />
 
       {/* Main Page Panel Coordinator */}

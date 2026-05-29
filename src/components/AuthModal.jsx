@@ -225,8 +225,8 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             <form onSubmit={handleSubmit} className="auth-form" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, justifyContent: 'center' }}>
               {error && (
                 <div style={{
-                  background: 'rgba(224, 122, 95, 0.1)',
-                  border: '1px solid rgba(224, 122, 95, 0.3)',
+                  background: 'rgba(var(--accent-rgb), 0.1)',
+                  border: '1px solid rgba(var(--accent-rgb), 0.3)',
                   color: 'var(--accent)',
                   padding: '0.75rem',
                   borderRadius: '10px',

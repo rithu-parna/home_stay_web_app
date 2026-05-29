@@ -75,7 +75,7 @@ export default function UserProfile({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 8px 25px rgba(224, 122, 95, 0.25)'
+          boxShadow: '0 8px 25px rgba(var(--accent-rgb), 0.25)'
         }}>
           {name.split(' ').map(n => n[0]).join('')}
         </div>
