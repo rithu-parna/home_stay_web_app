@@ -4,11 +4,11 @@ import { Compass, Tent, Trees, Layers, Landmark, Sunset } from 'lucide-react';
 
 const categories = [
   { id: 'All', label: 'All Stays', icon: Compass },
-  { id: 'Cabin', label: 'Cabins', icon: Tent, image: '/images/cabin/cabin_1.jpg' },
-  { id: 'Villa', label: 'Villas', icon: Sunset, image: '/images/villa/villa_1.jpg' },
-  { id: 'Loft', label: 'Lofts', icon: Layers, image: '/images/loft/loft_1.jpg' },
-  { id: 'Dome', label: 'Domes', icon: Trees, image: '/images/dome/dome_1.jpg' },
-  { id: 'Heritage', label: 'Heritage', icon: Landmark, image: '/images/heritage/heritage_1.jpg' }
+  { id: 'Cabin', label: 'Cabins', icon: Tent },
+  { id: 'Villa', label: 'Villas', icon: Sunset },
+  { id: 'Loft', label: 'Lofts', icon: Layers },
+  { id: 'Dome', label: 'Domes', icon: Trees },
+  { id: 'Heritage', label: 'Heritage', icon: Landmark }
 ];
 
 const uniqueVideos = [
@@ -136,76 +136,6 @@ export default function Hero({ activeCategories = [], setActiveCategories }) {
         }}>
           A curated collection of design-forward, boutique homestays, deep forest cabins, cliffside infinity villas, and converted industrial lofts.
         </p>
-      </div>
-
-      {/* Categories Scroller */}
-      <div className="container" style={{ width: '100%', marginTop: '2.5rem', position: 'relative', zIndex: 2 }}>
-        <div className="category-bar custom-scrollbar" style={{
-          borderBottom: '1px solid var(--border-color)',
-          paddingBottom: '0.2rem'
-        }}>
-          {categories.map((cat, i) => {
-            const Icon = cat.icon;
-            const isActive = cat.id === 'All'
-              ? activeCategories.length === 0
-              : activeCategories.includes(cat.id);
-            return (
-              <div
-                key={cat.id}
-                id={`category-tab-${cat.id.toLowerCase()}`}
-                onClick={() => {
-                  if (cat.id === 'All') {
-                     setActiveCategories([]);
-                  } else {
-                    // Single-select: toggle off if already active, otherwise select only this one
-                    setActiveCategories(prev =>
-                      prev.length === 1 && prev[0] === cat.id ? [] : [cat.id]
-                    );
-                  }
-                }}
-                className={`category-tab ${isActive ? 'active' : ''}`}
-                style={{
-                  minWidth: '90px',
-                  padding: '0.75rem 1rem',
-                  fontSize: '0.85rem'
-                }}
-              >
-                {cat.image ? (
-                  <img
-                    src={cat.image}
-                    alt={cat.label}
-                    style={{
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '8px',
-                      objectFit: 'cover',
-                      border: isActive ? '2px solid var(--accent)' : '1px solid var(--border-color)',
-                      transition: 'all var(--transition-fast)',
-                      filter: isActive ? 'none' : 'grayscale(25%) brightness(0.95)'
-                    }}
-                  />
-                ) : (
-                  <div style={{
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: isActive ? 'rgba(224, 122, 95, 0.15)' : 'var(--bg-tertiary)',
-                    border: isActive ? '2px solid var(--accent)' : '1px solid var(--border-color)',
-                    transition: 'all var(--transition-fast)'
-                  }}>
-                    <Icon size={14} style={{
-                      color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
-                    }} />
-                  </div>
-                )}
-                <span>{cat.label}</span>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </div>
   );

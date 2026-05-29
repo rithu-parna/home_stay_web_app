@@ -59,6 +59,13 @@ export default function App() {
     return cached ? JSON.parse(cached) : [];
   });
 
+  const [recentIds, setRecentIds] = useState(() => {
+    const cached = localStorage.getItem('vela-recent-ids');
+    return cached ? JSON.parse(cached) : [];
+  });
+
+  const [savedSubTab, setSavedSubTab] = useState('saved'); // 'saved' or 'recent'
+
   const [reservations, setReservations] = useState(() => {
     const cached = localStorage.getItem('vela-reservations');
     return cached ? JSON.parse(cached) : [];
@@ -90,6 +97,9 @@ export default function App() {
 
   // Computed: saved stays listings
   const savedStays = listings.filter(l => savedIds.includes(l.id));
+
+  // Computed: recently viewed listings
+  const recentStays = recentIds.map(id => listings.find(l => l.id === id)).filter(Boolean);
 
   // Sync theme changes with DOM
   useEffect(() => {
@@ -162,6 +172,10 @@ export default function App() {
   }, [savedIds]);
 
   useEffect(() => {
+    localStorage.setItem('vela-recent-ids', JSON.stringify(recentIds));
+  }, [recentIds]);
+
+  useEffect(() => {
     localStorage.setItem('vela-reservations', JSON.stringify(reservations));
   }, [reservations]);
 
@@ -182,6 +196,14 @@ export default function App() {
     setSavedIds(prev =>
       prev.includes(id) ? prev.filter(savedId => savedId !== id) : [...prev, id]
     );
+  };
+
+  const handleViewListing = (listing) => {
+    setActiveListing(listing);
+    setRecentIds(prev => {
+      const filtered = prev.filter(id => id !== listing.id);
+      return [listing.id, ...filtered].slice(0, 12);
+    });
   };
 
   // Add listing from Host panel
@@ -326,20 +348,13 @@ export default function App() {
                 </div>
                 <button
                   onClick={() => setActiveTab('collections')}
-                  className="btn btn-secondary"
-                  style={{
-                    borderRadius: '12px',
-                    padding: '0.6rem 1.2rem',
-                    fontSize: '0.85rem',
-                    fontWeight: 600,
-                    color: 'var(--accent)',
-                    border: '1px solid var(--accent)',
-                    background: 'transparent',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
+                  className="btn-premium-explore"
                 >
-                  View All Collections →
+                  Explore Collections
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="arrow-icon">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
                 </button>
               </div>
 
@@ -357,10 +372,131 @@ export default function App() {
                       listing={listing}
                       isSaved={savedIds.includes(listing.id)}
                       onToggleSave={handleToggleSave}
-                      onClick={() => setActiveListing(listing)}
+                      onClick={() => handleViewListing(listing)}
                     />
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Curated Collections Cards Grid */}
+            <div className="container" style={{ paddingBottom: '3.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '2.5rem' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                marginBottom: '1.5rem',
+                flexWrap: 'wrap',
+                gap: '1rem'
+              }}>
+                <div>
+                  <h2 style={{ fontSize: '1.8rem', fontWeight: '700', fontFamily: 'var(--font-serif)', margin: 0 }}>
+                    Curated Collections
+                  </h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: '0.2rem 0 0 0' }}>
+                    Explore boutique stays handpicked by architectural design typology.
+                  </p>
+                </div>
+              </div>
+
+              <div className="collections-curated-grid" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '1.25rem'
+              }}>
+                {['Cabin', 'Villa', 'Loft', 'Dome', 'Heritage'].map(cat => {
+                  const imageMap = {
+                    Cabin: '/images/cabin/cabin_1.jpg',
+                    Villa: '/images/villa/villa_1.jpg',
+                    Loft: '/images/loft/loft_1.jpg',
+                    Dome: '/images/dome/dome_1.jpg',
+                    Heritage: '/images/heritage/heritage_1.jpg'
+                  };
+                  const labelMap = {
+                    Cabin: 'Cabins',
+                    Villa: 'Villas',
+                    Loft: 'Lofts',
+                    Dome: 'Domes',
+                    Heritage: 'Heritage'
+                  };
+                  const descMap = {
+                    Cabin: 'Secluded cabins & retreats',
+                    Villa: 'Scenic cliffside pool villas',
+                    Loft: 'High-ceiling industrial lofts',
+                    Dome: 'Geodesic dome glamping',
+                    Heritage: 'Historic landmarks & castles'
+                  };
+                  const count = listings.filter(l => l.category === cat).length;
+                  return (
+                    <div
+                      key={cat}
+                      onClick={() => {
+                        setCollectionFilter([cat]);
+                        setActiveTab('collections');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="collection-card-hero"
+                      style={{
+                        position: 'relative',
+                        height: '180px',
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(0,0,0,0.12)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}
+                    >
+                      <img
+                        src={imageMap[cat]}
+                        alt={cat}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                        }}
+                        className="collection-card-img"
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
+                        color: '#fff',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-end',
+                        padding: '1.25rem',
+                        height: '100%',
+                        boxSizing: 'border-box'
+                      }}>
+                        <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--accent)', fontWeight: 700, marginBottom: '2px' }}>
+                          Collection
+                        </span>
+                        <h4 style={{ fontWeight: '700', fontSize: '1.2rem', margin: 0, color: '#fff' }}>
+                          {labelMap[cat]}
+                        </h4>
+                        <p style={{ fontSize: '0.75rem', opacity: 0.8, margin: '4px 0 0 0', lineHeight: 1.2 }}>
+                          {descMap[cat]}
+                        </p>
+                        <span style={{
+                          marginTop: '8px',
+                          fontSize: '0.75rem',
+                          background: 'rgba(255,255,255,0.12)',
+                          padding: '2px 8px',
+                          borderRadius: '6px',
+                          width: 'fit-content',
+                          backdropFilter: 'blur(4px)',
+                          fontWeight: 600
+                        }}>
+                          {count} stays
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -398,7 +534,7 @@ export default function App() {
                         listing={listing}
                         isSaved={savedIds.includes(listing.id)}
                         onToggleSave={handleToggleSave}
-                        onClick={() => setActiveListing(listing)}
+                        onClick={() => handleViewListing(listing)}
                       />
                     ))}
                     {isExploreLoadingMore && (
@@ -826,7 +962,7 @@ export default function App() {
                                 listing={listing}
                                 isSaved={savedIds.includes(listing.id)}
                                 onToggleSave={handleToggleSave}
-                                onClick={() => setActiveListing(listing)}
+                                onClick={() => handleViewListing(listing)}
                               />
                             </div>
                           ))}
@@ -863,46 +999,156 @@ export default function App() {
         {/* Saved Tab */}
         {activeTab === 'saved' && (
           <div className="container page-container anim-fade">
-            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>Saved Stays</h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '2rem' }}>
-              Your collection of architectural masterpieces, scenic forest cabins, and beach escapes.
+            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)' }}>Saved & History</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
+              Your collection of architectural masterpieces, scenic forest cabins, beach escapes, and recently viewed stays.
             </p>
 
-            {savedStays.length === 0 ? (
-              <div style={{
-                textAlign: 'center',
-                padding: '5rem 2rem',
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '24px',
-                color: 'var(--text-secondary)'
-              }}>
-                <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                  No Saved Stays Yet
-                </h3>
-                <p style={{ fontSize: '0.95rem', maxWidth: '400px', margin: '0 auto' }}>
-                  Tap the heart icons on stays as you browse the explore panel to build your dream bucket list here.
-                </p>
-                <button
-                  onClick={() => setActiveTab('explore')}
-                  className="btn btn-primary"
-                  style={{ marginTop: '1.5rem', borderRadius: '10px' }}
-                >
-                  Explore Stays
-                </button>
-              </div>
+            {/* Sub-tab segmented control */}
+            <div style={{
+              display: 'flex',
+              gap: '0.5rem',
+              marginBottom: '2rem',
+              background: 'var(--bg-secondary)',
+              padding: '0.35rem',
+              borderRadius: '12px',
+              border: '1px solid var(--border-color)',
+              width: 'fit-content'
+            }}>
+              <button
+                onClick={() => setSavedSubTab('saved')}
+                style={{
+                  background: savedSubTab === 'saved' ? 'var(--accent-gradient)' : 'none',
+                  border: 'none',
+                  fontSize: '0.88rem',
+                  fontWeight: 600,
+                  color: savedSubTab === 'saved' ? '#fff' : 'var(--text-secondary)',
+                  padding: '0.5rem 1.25rem',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all var(--transition-fast)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem'
+                }}
+              >
+                Saved Stays
+                <span style={{
+                  background: savedSubTab === 'saved' ? 'rgba(255,255,255,0.2)' : 'var(--bg-tertiary)',
+                  color: savedSubTab === 'saved' ? '#fff' : 'var(--text-primary)',
+                  fontSize: '0.75rem',
+                  padding: '0.1rem 0.4rem',
+                  borderRadius: '6px',
+                  fontWeight: 'bold'
+                }}>
+                  {savedStays.length}
+                </span>
+              </button>
+              <button
+                onClick={() => setSavedSubTab('recent')}
+                style={{
+                  background: savedSubTab === 'recent' ? 'var(--accent-gradient)' : 'none',
+                  border: 'none',
+                  fontSize: '0.88rem',
+                  fontWeight: 600,
+                  color: savedSubTab === 'recent' ? '#fff' : 'var(--text-secondary)',
+                  padding: '0.5rem 1.25rem',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all var(--transition-fast)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem'
+                }}
+              >
+                Recently Viewed
+                <span style={{
+                  background: savedSubTab === 'recent' ? 'rgba(255,255,255,0.2)' : 'var(--bg-tertiary)',
+                  color: savedSubTab === 'recent' ? '#fff' : 'var(--text-primary)',
+                  fontSize: '0.75rem',
+                  padding: '0.1rem 0.4rem',
+                  borderRadius: '6px',
+                  fontWeight: 'bold'
+                }}>
+                  {recentStays.length}
+                </span>
+              </button>
+            </div>
+
+            {savedSubTab === 'saved' ? (
+              savedStays.length === 0 ? (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '5rem 2rem',
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '24px',
+                  color: 'var(--text-secondary)'
+                }}>
+                  <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                    No Saved Stays Yet
+                  </h3>
+                  <p style={{ fontSize: '0.95rem', maxWidth: '400px', margin: '0 auto' }}>
+                    Tap the heart icons on stays as you browse the explore panel to build your dream bucket list here.
+                  </p>
+                  <button
+                    onClick={() => setActiveTab('explore')}
+                    className="btn btn-primary"
+                    style={{ marginTop: '1.5rem', borderRadius: '10px' }}
+                  >
+                    Explore Stays
+                  </button>
+                </div>
+              ) : (
+                <div className="listings-grid">
+                  {savedStays.map(listing => (
+                    <ListingCard
+                      key={listing.id}
+                      listing={listing}
+                      isSaved={savedIds.includes(listing.id)}
+                      onToggleSave={handleToggleSave}
+                      onClick={() => handleViewListing(listing)}
+                    />
+                  ))}
+                </div>
+              )
             ) : (
-              <div className="listings-grid">
-                {savedStays.map(listing => (
-                  <ListingCard
-                    key={listing.id}
-                    listing={listing}
-                    isSaved={true}
-                    onToggleSave={handleToggleSave}
-                    onClick={() => setActiveListing(listing)}
-                  />
-                ))}
-              </div>
+              recentStays.length === 0 ? (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '5rem 2rem',
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '24px',
+                  color: 'var(--text-secondary)'
+                }}>
+                  <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                    No Recently Viewed Stays
+                  </h3>
+                  <p style={{ fontSize: '0.95rem', maxWidth: '400px', margin: '0 auto' }}>
+                    Click on different homestay listings in the explore panel to see your viewing history here.
+                  </p>
+                  <button
+                    onClick={() => setActiveTab('explore')}
+                    className="btn btn-primary"
+                    style={{ marginTop: '1.5rem', borderRadius: '10px' }}
+                  >
+                    Explore Stays
+                  </button>
+                </div>
+              ) : (
+                <div className="listings-grid">
+                  {recentStays.map(listing => (
+                    <ListingCard
+                      key={listing.id}
+                      listing={listing}
+                      isSaved={savedIds.includes(listing.id)}
+                      onToggleSave={handleToggleSave}
+                      onClick={() => handleViewListing(listing)}
+                    />
+                  ))}
+                </div>
+              )
             )}
           </div>
         )}
@@ -924,7 +1170,7 @@ export default function App() {
             reservations={reservations}
             cancelReservation={handleCancelReservation}
             savedStays={savedStays}
-            onViewListing={(lst) => setActiveListing(lst)}
+            onViewListing={(lst) => handleViewListing(lst)}
             activeSubTab={activeSubTab}
             setActiveSubTab={setActiveSubTab}
             onLogout={handleLogout}
@@ -1142,7 +1388,12 @@ export default function App() {
               onClick={() => changeTab(id)}
               className={`mobile-nav-item ${isActive ? 'active' : ''}`}
             >
-              <span className="mobile-nav-icon">{icon(isActive)}</span>
+              <span className="mobile-nav-icon">
+                {icon(isActive)}
+                {id === 'saved' && savedIds.length > 0 && (
+                  <span className="mobile-nav-badge">{savedIds.length}</span>
+                )}
+              </span>
               <span className="mobile-nav-label">{label}</span>
             </button>
           );
